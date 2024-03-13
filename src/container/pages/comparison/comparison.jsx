@@ -23,7 +23,6 @@ const Comparison = () => {
 
   // update this
   const [isMapped, setIsMapped] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
 
   const handleMap = (mapValue) => {
     mapValue ? setIsMapped(mapValue) : setIsMapped(true);
@@ -34,7 +33,6 @@ const Comparison = () => {
     console.log(location);
     if (location?.state?.edit === true) {
       setIsMapped(true);
-      setIsEdit(true);
     }
 
     //LATER use it as api  (async await)
