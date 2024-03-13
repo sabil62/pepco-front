@@ -8,26 +8,7 @@ const Info = () => {
 
   const [fileName, setFileName] = useState({});
 
-  const fakeExcelData = [
-    {
-      id: 21,
-      title: "twenty",
-    },
-    {
-      id: 22,
-      title: "two two",
-    },
-    {
-      id: 24,
-      title: "four",
-    },
-    {
-      id: 25,
-      title: "five two",
-    },
-  ];
-
-  const tempDynamicData = [
+  let tempD = [
     {
       id: 16,
       title: "Account Data Analysis",
@@ -50,8 +31,51 @@ const Info = () => {
     },
   ];
 
+  const [tempDynamicData, setTempDynamicData] = useState([]);
+
+  const fakeExcelData = [
+    {
+      id: 21,
+      title: "twenty",
+    },
+    {
+      id: 22,
+      title: "two two",
+    },
+    {
+      id: 24,
+      title: "four",
+    },
+    {
+      id: 25,
+      title: "five two",
+    },
+  ];
+
+  const idToTitle = () => {
+    let tempData = [...tempDynamicData];
+    console.log(tempData.length);
+    for (let i = 0; i < tempData.length; i++) {
+      let firstID = tempData[i].excel_files[0];
+      let secondID = tempData[i].excel_files[1];
+
+      tempData[i].excel_files[0] = fileName[firstID];
+      tempData[i].excel_files[1] = fileName[secondID];
+    }
+    console.log(tempData);
+    setTempDynamicData(tempData);
+  };
+
   useEffect(() => {
-    // make this async func
+    console.log(tempDynamicData);
+    if (Object.keys(fileName)?.length > 0) {
+      idToTitle();
+    }
+  }, [fileName]);
+
+  useEffect(() => {
+    setTempDynamicData(tempD);
+
     const mapName = () => {
       let mappedFileNameObj = {};
       if (fakeExcelData) {
@@ -60,12 +84,17 @@ const Info = () => {
           mappedFileNameObj[item.id] = item.title;
         });
       }
-      if (mappedFileNameObj.length > 0) {
-        setFileName(mappedFileNameObj);
+      console.log(mappedFileNameObj);
+      if (Object.keys(mappedFileNameObj).length > 0) {
+        setFileName(mappedFileNameObj); //{0:"one one",21:"two"}
+        // idToTitle();
       }
     };
     mapName();
-  });
+    // idToTitle();
+
+    // make this async func
+  }, []);
 
   const action = (index) => (
     <div>
@@ -112,10 +141,10 @@ const Info = () => {
                   Client Alias
                 </th> */}
                 <th scope="col" className="px-12 py-3 w-[220px] text-left">
-                  From_Map
+                  From Map
                 </th>
                 <th scope="col" className="px-12 py-3 w-[220px] text-left">
-                  To_Map
+                  To Map
                 </th>
                 <th scope="col" className="px-12 py-3">
                   Action
@@ -123,30 +152,24 @@ const Info = () => {
               </tr>
             </thead>
             <tbody>
-              {tempDynamicData.map((c, i) => (
-                <tr
-                  className="odd:bg-white even:bg-gray-50 border-b text-md text-left"
-                  key={i}
-                >
-                  <td
-                    scope="row"
-                    className="px-12 py-4 whitespace-nowrap w-[300px]"
+              {tempDynamicData?.length > 0 &&
+                tempDynamicData.map((c, i) => (
+                  <tr
+                    className="odd:bg-white even:bg-gray-50 border-b text-md text-left"
+                    key={i}
                   >
-                    {c.title}
-                  </td>
-                  {/* <td className="px-12 py-4 w-[300px] text-center">
-                    {c.client_alias}
-                  </td> */}
-                  <td className="px-12 py-4 w-[220px]">
-                    {JSON.stringify(fileName) +
-                      "[ " +
-                      (c.excel_files.length > 0 ? c.excel_files[0] : "") +
-                      " ]"}
-                  </td>
-                  <td className="px-12 py-4 w-[220px]">{c.excel_files[1]}</td>
-                  <td className="px-12 py-4">{action(i)}</td>
-                </tr>
-              ))}
+                    <td
+                      scope="row"
+                      className="px-12 py-4 whitespace-nowrap w-[300px]"
+                    >
+                      {c.title}
+                    </td>
+
+                    <td className="px-12 py-4 w-[220px]">{c.excel_files[0]}</td>
+                    <td className="px-12 py-4 w-[220px]">{c.excel_files[1]}</td>
+                    <td className="px-12 py-4">{action(i)}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
