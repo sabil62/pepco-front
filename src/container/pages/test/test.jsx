@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getFiles, uploadFiles } from "../../../utils/api/api/fileAPI";
-import ComparisonNew from "../comparison/comparison_new";
+import Comparison from "../comparison/comparison";
 
 const Test = () => {
   const [formData, setFormData] = useState();
@@ -53,7 +53,7 @@ const Test = () => {
 
   return (
     <>
-      <ComparisonNew />
+      <Comparison />
       <div className="text-5xl font-bold text-center mt-[120px]">TEST</div>
       <form encType="multipart/form-data">
         <input

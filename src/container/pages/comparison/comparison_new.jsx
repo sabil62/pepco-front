@@ -3,17 +3,7 @@ import { Button, Grid } from "../../../components/tailwind/tailwind_variable";
 import Container from "../../../layout/container/container";
 import { returnKeyDataFromArr } from "../../../components/functions/functions";
 import ComparisonTableNew from "./comparison Table/comparison_table_new";
-
-import {
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  closestCorners,
-  sortableKeyboardCoordinates,
-} from "@dnd-kit/core";
-import ComparisonDND from "./comparison Table/comparison_table_dnd";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const ComparisonNew = () => {
   const [apiData, setApiData] = useState();
@@ -29,13 +19,6 @@ const ComparisonNew = () => {
     primary_key: ["firstname"],
     project: 19,
   };
-
-  const sensors = useSensors(
-    useSensor(PointerSensor)
-    // useSensor(KeyboardSensor, {
-    //   coordinateGetter: sortableKeyboardCoordinates,
-    // })
-  );
 
   useEffect(() => {
     //all inside fetchdata
@@ -63,28 +46,14 @@ const ComparisonNew = () => {
     });
   };
 
+  const handleDragDND = () => {
+    console.log("handle");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("submit");
     console.log(apiData);
-  };
-
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    console.log(event);
-
-    if (active.id === over.id) return;
-
-    // setTasks((tasks) => {
-    //   const originalPos = getTaskPos(active.id);
-    //   const newPos = getTaskPos(over.id);
-
-    //   return arrayMove(tasks, originalPos, newPos);
-    // });
-
-    // setApiData((prevState)=>{
-
-    // })
   };
 
   return (
@@ -130,13 +99,34 @@ const ComparisonNew = () => {
               />
             )}
             {apiData?.source_columns && (
-              <DndContext
-                sensors={sensors}
-                collisionDetection={closestCorners}
-                onDragEnd={handleDragEnd}
-              >
-                <ComparisonDND id="toDo" arrs={apiData.source_columns} />
-              </DndContext>
+              <div>
+                <DragDropContext onDragEnd={handleDragDND}>
+                  <Droppable droppableId="Items">
+                    {(provided) => (
+                      <div
+                        className="bg-gray-100"
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
+                        {apiData.source_columns.map((item, id) => (
+                          <Draggable key={id} draggableId={id} index={id}>
+                            {(provided) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                className="bg-[#D5DDF8] shadow-md mt-5 px-4 py-5 h-18 rounded-[18px] border-l-[24px] border-[#B0BCE8] hover:bg-blue-100"
+                              >
+                                {item}
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                      </div>
+                    )}
+                  </Droppable>
+                </DragDropContext>
+              </div>
             )}
           </div>
           <div className="col-span-4">
