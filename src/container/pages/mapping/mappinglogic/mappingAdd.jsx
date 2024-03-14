@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "../../../components/tailwind/tailwind_variable";
-import Container from "../../../layout/container/container";
-import { returnKeyDataFromArr } from "../../../components/functions/functions";
-import MappingTable from "./mapping_comp/mappingTable";
+import {
+  Button,
+  Grid,
+} from "../../../../components/tailwind/tailwind_variable";
+import Container from "../../../../layout/container/container";
+import { returnKeyDataFromArr } from "../../../../components/functions/functions";
+import MappingTable from "../mapping_comp/mappingTable";
 
 const MappingAdd = () => {
   const [apiData, setApiData] = useState();
