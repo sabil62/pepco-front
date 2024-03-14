@@ -15,9 +15,23 @@ export const getAllMapping = async () => {
 //post mapping api
 //update mapping api
 export const updateMapping = async ({ id, header }) => {
-  console.log(id, header);
+  // console.log(id, header);
   try {
     let resp = await axiosInstance.put(`/api/mapping/${id}/`, header);
+    if (resp.status === 200) {
+      console.log(resp);
+      return resp;
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const postMapping = async ({ header }) => {
+  // console.log(id, header);
+  try {
+    let resp = await axiosInstance.put("/api/mapping/", header);
     if (resp.status === 200) {
       console.log(resp);
       return resp;

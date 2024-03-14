@@ -47,13 +47,16 @@ const Mapping = () => {
     }
   }, []);
 
-  //   return isEditPage ? (
-  //     isEditPage === true ? (
-  //       <MappingEdit apiEditInfo={editMappingInfo} />
-  //     ) : (
-  //       <MappingAdd projectId={location?.state?.projectId} />
-  //     )
-  //   ) : null;
+  return isEditPage ? (
+    isEditPage === true ? (
+      <MappingEdit
+        apiEditInfo={editMappingInfo}
+        title={location?.state?.title}
+      />
+    ) : (
+      <MappingAdd projectId={location?.state?.projectId} />
+    )
+  ) : null;
 
   return <MappingAdd projectId={location?.state?.projectId} />;
 };

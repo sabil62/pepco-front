@@ -8,15 +8,14 @@ import { returnKeyDataFromArr } from "../../../../components/functions/functions
 import MappingTable from "../mapping_comp/mappingTable";
 import { getProject } from "../../../../utils/api/api/projectAPI";
 import { getFile } from "../../../../utils/api/api/fileAPI";
+import { getAllClient } from "../../../../utils/api/api/clientAPI";
 
 const MappingAdd = ({ projectId }) => {
   const [apiData, setApiData] = useState();
   const [minimumKey, setMinimumKey] = useState([]);
   const [maximumKey, setMaximumKey] = useState([]);
 
-  const [projectData, setProjectData] = useState();
-  const [excelFirst, setExcelFirst] = useState();
-  const [excelSecond, setExcelSecond] = useState();
+  const [titleName, setTitleName] = useState();
 
   const [checkboxIndex, setCheckBoxIndex] = useState([]);
 
@@ -32,10 +31,15 @@ const MappingAdd = ({ projectId }) => {
         try {
           //-----1st first API of project Information (get tilte of project and mapped excel_file id)
           let resp = await getProject({ id: projectId });
+          console.log(resp);
           if (resp.status === 200) {
             // console.log(resp.data);
             currentProjectInfo = resp.data;
-            setProjectData(currentProjectInfo);
+            setTitleName(currentProjectInfo.title);
+          }
+          //client Info
+          let respClient = await getAllClient();
+          if (respClient.status === 200) {
           }
           //   console.log(currentProjectInfo);
           //-------2nd excel file information (including title and all headrs with category)
@@ -49,8 +53,6 @@ const MappingAdd = ({ projectId }) => {
           if ((respFile1.status === 200) & (respFile2.status === 200)) {
             fileInfoFirst = respFile1.data;
             fileInfoSecond = respFile2.data;
-            setExcelFirst(respFile1.data);
-            setExcelSecond(respFile2.data);
           }
 
           submitTemplate = {
@@ -113,6 +115,7 @@ const MappingAdd = ({ projectId }) => {
     submitData["primary_key"] = primaryCol;
 
     console.log(submitData);
+    //now post this
     setApiData(submitData);
   };
 
@@ -132,7 +135,7 @@ const MappingAdd = ({ projectId }) => {
       <form onSubmit={handleSubmit}>
         <Grid>
           <div className="col-span-8 text-2xl font-medium mt-7 mb-3">
-            Client Name: System 1
+            {titleName && titleName}
           </div>
           <div className="md:col-span-10 pt-3 lg:col-span-2 flex justify-center items-center">
             <Button type="submit">Submit</Button>

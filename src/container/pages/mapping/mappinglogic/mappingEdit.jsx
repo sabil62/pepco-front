@@ -9,7 +9,7 @@ import { returnKeyDataFromArr } from "../../../../components/functions/functions
 import { updateMapping } from "../../../../utils/api/api/mapAPI";
 import { useNavigate } from "react-router-dom";
 
-const MappingEdit = ({ apiEditInfo }) => {
+const MappingEdit = ({ apiEditInfo, title }) => {
   const [apiData, setApiData] = useState();
   const [minimumKey, setMinimumKey] = useState([]);
   const [maximumKey, setMaximumKey] = useState([]);
@@ -19,7 +19,7 @@ const MappingEdit = ({ apiEditInfo }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // console.log(apiEditInfo);
+    console.log(apiEditInfo);
     setApiData(apiEditInfo);
     const arrLength = returnKeyDataFromArr({
       firstArr: apiEditInfo?.source_columns, //replace tempVar with apiData
@@ -113,7 +113,7 @@ const MappingEdit = ({ apiEditInfo }) => {
         <form onSubmit={handleSubmit}>
           <Grid>
             <div className="col-span-8 text-2xl font-medium mt-7 mb-3">
-              Client Name:
+              {title && title}
               {/* Not given Client Name in API */}
             </div>
             <div className="md:col-span-10 pt-3 lg:col-span-2 flex justify-center items-center">
