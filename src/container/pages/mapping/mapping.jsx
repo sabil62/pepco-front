@@ -11,7 +11,6 @@ const Mapping = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(location);
     let projectId = location?.state?.projectId;
     if (projectId) {
       const fetchMappingInfo = async () => {
@@ -33,10 +32,10 @@ const Mapping = () => {
           //   console.log(associatedIndex, projectId);
           if (associatedIndex >= 0) {
             setIsEditPage(true);
-            console.log("divert to edit page");
+            // console.log("divert to edit page");
           } else {
             setIsEditPage(false);
-            console.log("divert to add page");
+            // console.log("divert to add page");
           }
         } catch (error) {
           console.log(error);

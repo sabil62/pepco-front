@@ -7,6 +7,7 @@ import Container from "../../../../layout/container/container";
 import { returnKeyDataFromArr } from "../../../../components/functions/functions";
 import MappingTable from "../mapping_comp/mappingTable";
 import { getProject } from "../../../../utils/api/api/projectAPI";
+import { getFile } from "../../../../utils/api/api/fileAPI";
 
 const MappingAdd = ({ projectId }) => {
   const [apiData, setApiData] = useState();
@@ -14,49 +15,80 @@ const MappingAdd = ({ projectId }) => {
   const [maximumKey, setMaximumKey] = useState([]);
 
   const [projectData, setProjectData] = useState();
-  const [excelInfo, setExcelInfo] = useState();
+  const [excelFirst, setExcelFirst] = useState();
+  const [excelSecond, setExcelSecond] = useState();
 
-  const tempVar = {
-    id: 5,
-    source: "test",
-    source_columns: ["firstname", "secondname", "salary"],
-    dest: "test1",
-    dest_columns: ["firstname", "lastname", "salary"],
-    primary_key: ["firstname"],
-    project: 19,
-  };
+  const [checkboxIndex, setCheckBoxIndex] = useState([]);
 
   useEffect(() => {
     console.log(projectId);
     if (projectId) {
+      let currentProjectInfo = {};
+      let fileInfoFirst = {};
+      let fileInfoSecond = {};
+      let submitTemplate = {};
+
       const fetchAllData = async () => {
         try {
+          //-----1st first API of project Information (get tilte of project and mapped excel_file id)
           let resp = await getProject({ id: projectId });
           if (resp.status === 200) {
-            console.log(resp.data);
-            setProjectData(resp.data);
+            // console.log(resp.data);
+            currentProjectInfo = resp.data;
+            setProjectData(currentProjectInfo);
           }
+          //   console.log(currentProjectInfo);
+          //-------2nd excel file information (including title and all headrs with category)
+          let respFile1 = await getFile({
+            id: currentProjectInfo.excel_files[0],
+          });
+          let respFile2 = await getFile({
+            id: currentProjectInfo?.excel_files[1],
+          });
+
+          if ((respFile1.status === 200) & (respFile2.status === 200)) {
+            fileInfoFirst = respFile1.data;
+            fileInfoSecond = respFile2.data;
+            setExcelFirst(respFile1.data);
+            setExcelSecond(respFile2.data);
+          }
+
+          submitTemplate = {
+            source: fileInfoFirst.title,
+            // source_columns: Object.keys(fileInfoFirst.header).map((c)=>c), //for keys
+            source_columns: Object.keys(fileInfoFirst.header).map(
+              (c) => fileInfoFirst.header[c]
+            ),
+            dest: fileInfoSecond.title,
+            dest_columns: Object.keys(fileInfoSecond.header).map(
+              (c) => fileInfoSecond.header[c]
+            ),
+            project: projectId,
+            primary_key: [],
+          };
+
+          console.log(submitTemplate);
+          setApiData(submitTemplate);
+
+          //min and max key
+          const arrLength = returnKeyDataFromArr({
+            firstArr: submitTemplate?.source_columns, //replace tempVar with apiData
+            secondArr: submitTemplate?.dest_columns,
+          });
+          // console.log(arrLength);
+          setMinimumKey(arrLength[1]);
+          setMaximumKey(arrLength[0]);
         } catch (error) {
           console.log(error);
         }
       };
       fetchAllData();
     }
-
-    //all inside fetchdata
-    setApiData(tempVar);
-    const arrLength = returnKeyDataFromArr({
-      firstArr: tempVar?.source_columns, //replace tempVar with apiData
-      secondArr: tempVar?.dest_columns,
-    });
-    // console.log(arrLength);
-    setMinimumKey(arrLength[1]);
-    setMaximumKey(arrLength[0]);
   }, []);
 
-  //   useEffect(() => {
-  //     console.log(apiData);
-  //   }, [apiData]);
+  useEffect(() => {
+    console.log(apiData);
+  }, [apiData]);
 
   const handleDragData = (key, updatedArr) => {
     // console.log(key);
@@ -71,7 +103,28 @@ const MappingAdd = ({ projectId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("submit");
-    console.log(apiData);
+    let submitData = { ...apiData };
+    let checkArr = [...checkboxIndex];
+
+    let source_col = [...apiData["source_columns"]];
+
+    let primaryCol = checkArr.map((item) => source_col[item]);
+
+    submitData["primary_key"] = primaryCol;
+
+    console.log(submitData);
+    setApiData(submitData);
+  };
+
+  const handleCheckBox = (e, index) => {
+    let checkIndexArr = [...checkboxIndex];
+    if (e.target.checked === true) {
+      checkIndexArr.push(index);
+    } else {
+      checkIndexArr = checkIndexArr.filter((item) => item != index);
+    }
+    console.log(checkIndexArr);
+    setCheckBoxIndex(checkIndexArr);
   };
 
   return (
@@ -90,16 +143,16 @@ const MappingAdd = ({ projectId }) => {
         <Grid grid12>
           <div className="col-span-1">
             <div className="font-medium mt-6 ml-3">Join Key</div>
-            {minimumKey?.map((item, key) => (
+            {minimumKey?.map((item, index) => (
               <div
-                key={item + key}
+                key={item + index}
                 className="h-16 mt-9 w-16 border-2 border-slate-200 bg-gray-50 rounded-md flex justify-center items-center hover:bg-gray-50 cursor-pointer"
               >
                 <input
                   type="checkbox"
                   name={"is_primary_key"}
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  scale-125"
-                  // onChange={(e) => handleCheckBox(e, index)}
+                  onChange={(e) => handleCheckBox(e, index)}
                 />
               </div>
             ))}

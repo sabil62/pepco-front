@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import Container from "../../../layout/container/container";
-import { getAllFile, getAllProject } from "../../../utils/api/api/projectAPI";
+import { getAllProject } from "../../../utils/api/api/projectAPI";
+import { getAllFile } from "../../../utils/api/api/fileAPI";
 
 const Info = () => {
   const navigate = useNavigate();
