@@ -1,8 +1,8 @@
 import { axiosInstance } from "../axiosInstance";
 
-const getMappingInfo = async ({ id }) => {
+export const getAllMapping = async () => {
   try {
-    let resp = await axiosInstance.get(`/api/mapping/${id}`);
+    let resp = await axiosInstance.get(`/api/mapping/`);
     if (resp.status === 200) {
       console.log(resp);
       return resp;

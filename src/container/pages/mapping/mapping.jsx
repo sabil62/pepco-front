@@ -3,11 +3,17 @@ import { Button, Grid } from "../../../components/tailwind/tailwind_variable";
 import Container from "../../../layout/container/container";
 import { returnKeyDataFromArr } from "../../../components/functions/functions";
 import MappingTable from "./mapping_comp/mappingTable";
+import { useLocation } from "react-router-dom";
+import { getAllMapping } from "../../../utils/api/api/mapAPI";
 
 const Mapping = () => {
   const [apiData, setApiData] = useState();
   const [minimumKey, setMinimumKey] = useState([]);
   const [maximumKey, setMaximumKey] = useState([]);
+
+  const [isEditPage, setIsEditPage] = useState();
+
+  const location = useLocation();
 
   const tempVar = {
     id: 5,
@@ -20,6 +26,36 @@ const Mapping = () => {
   };
 
   useEffect(() => {
+    console.log(location);
+    let projectId = location?.state?.projectId;
+    if (projectId) {
+      const fetchMappingInfo = async () => {
+        let availableProjectIdArr = [];
+
+        let resp = await getAllMapping();
+        if (resp.status === 200) {
+          let allMappingInfo = resp.data;
+
+          allMappingInfo.forEach((item) => {
+            availableProjectIdArr.push(item.project);
+          });
+          console.log(availableProjectIdArr);
+        }
+
+        console.log(availableProjectIdArr, projectId);
+        if (availableProjectIdArr.includes(projectId)) {
+          setIsEditPage(true);
+          console.log("divert to edit page");
+        } else {
+          setIsEditPage(false);
+          console.log("divert to add page");
+        }
+      };
+      fetchMappingInfo();
+    } else {
+      setIsEditPage(false);
+    }
+
     //all inside fetchdata
     setApiData(tempVar);
     const arrLength = returnKeyDataFromArr({
