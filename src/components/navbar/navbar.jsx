@@ -104,7 +104,12 @@ const Navbar = () => {
                 </a>
 
                 {jwtInfo?.username && (
-                  <Button onClick={handleLogout}>Logout</Button>
+                  <button
+                    onClick={handleLogout}
+                    className="w-[100px] text-center text-[1rem] px-6 py-3 rounded-md bg-indigo-400 hover:bg-indigo-500 transition ease-out text-white font-medium cursor-pointer"
+                  >
+                    Logout
+                  </button>
                 )}
               </div>
             </div>

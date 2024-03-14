@@ -11,6 +11,7 @@ import ProtectedAppRoute from "./protectedAppRoute";
 import Logout from "../../container/pages/logout/logout";
 import Test from "../../container/pages/test/test";
 import Info from "../../container/pages/info/info";
+import ComparisonNew from "../../container/pages/comparison/comparison_new";
 
 const logicPaths = [
   {
@@ -34,7 +35,7 @@ const logicPaths = [
     element: (
       <ProtectedAppRoute>
         {" "}
-        <Comparison />
+        <ComparisonNew />
       </ProtectedAppRoute>
     ),
   },

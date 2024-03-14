@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import DragAndDrop from "../../../../assets/icons/dragAndDrop";
 
-const ComparisonTableNew = ({ arr }) => {
+const ComparisonTableNew = ({ arr, onDragData, keyName }) => {
+  console.log(keyName);
   const currentlyDraggedComponent = useRef(0);
   const toBeReplacedComponent = useRef(0);
 
@@ -16,7 +17,8 @@ const ComparisonTableNew = ({ arr }) => {
     console.log(updatetFullList);
 
     //from previous
-    // onDragData(updatetFullList);
+    // console.log(keyName);
+    onDragData(keyName, updatetFullList);
   };
 
   return (
