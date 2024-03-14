@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Button, Grid } from "../../../components/tailwind/tailwind_variable";
 import Container from "../../../layout/container/container";
 import { returnKeyDataFromArr } from "../../../components/functions/functions";
-import ComparisonTableNew from "./comparison Table/comparison_table_new";
+import MappingTable from "./mapping_comp/mappingTable";
 
-const ComparisonNew = () => {
+const Mapping = () => {
   const [apiData, setApiData] = useState();
   const [minimumKey, setMinimumKey] = useState([]);
   const [maximumKey, setMaximumKey] = useState([]);
@@ -87,7 +87,7 @@ const ComparisonNew = () => {
             </div>
 
             {apiData?.source_columns && (
-              <ComparisonTableNew
+              <MappingTable
                 arr={apiData.source_columns}
                 onDragData={handleDragData}
                 keyName="source_columns"
@@ -99,7 +99,7 @@ const ComparisonNew = () => {
               {apiData?.dest}
             </div>
             {apiData?.dest_columns && (
-              <ComparisonTableNew
+              <MappingTable
                 arr={apiData.dest_columns}
                 onDragData={handleDragData}
                 keyName="dest_columns"
@@ -134,4 +134,4 @@ const ComparisonNew = () => {
   );
 };
 
-export default ComparisonNew;
+export default Mapping;

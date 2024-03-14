@@ -70,8 +70,9 @@ const Info = () => {
   );
 
   const handleEdit = (index) => {
-    console.log(index);
-    navigate("/logic/compform", { state: { edit: true } });
+    console.log(apiData[index]);
+    // apiData[index]
+    navigate("/logic/compform", { state: { projectId: apiData[index].id } });
   };
 
   // const handleAdd = () => {

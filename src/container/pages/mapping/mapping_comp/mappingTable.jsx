@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
+
 import DragAndDrop from "../../../../assets/icons/dragAndDrop";
 
-const ComparisonTableNew = ({ arr, onDragData, keyName }) => {
+const MappingTable = ({ arr, onDragData, keyName }) => {
   console.log(keyName);
   const currentlyDraggedComponent = useRef(0);
   const toBeReplacedComponent = useRef(0);
@@ -47,4 +48,4 @@ const ComparisonTableNew = ({ arr, onDragData, keyName }) => {
   );
 };
 
-export default ComparisonTableNew;
+export default MappingTable;

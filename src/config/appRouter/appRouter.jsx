@@ -3,7 +3,7 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import Comparison from "../../container/pages/comparison/comparison";
+// import Comparison from "../../container/pages/comparison/comparison";
 import Login from "../../container/pages/login/login";
 import MainContentLayout from "../../layout/mainContent/mainContentLayout";
 import Upload from "../../container/pages/upload/upload";
@@ -11,7 +11,8 @@ import ProtectedAppRoute from "./protectedAppRoute";
 import Logout from "../../container/pages/logout/logout";
 import Test from "../../container/pages/test/test";
 import Info from "../../container/pages/info/info";
-import ComparisonNew from "../../container/pages/comparison/comparison_new";
+// import ComparisonNew from "../../container/pages/comparison/comparison_new";
+import Mapping from "../../container/pages/mapping/mapping";
 
 const logicPaths = [
   {
@@ -35,7 +36,7 @@ const logicPaths = [
     element: (
       <ProtectedAppRoute>
         {" "}
-        <ComparisonNew />
+        <Mapping />
       </ProtectedAppRoute>
     ),
   },
