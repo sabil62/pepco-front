@@ -6,12 +6,17 @@ import {
 } from "../../../../components/tailwind/tailwind_variable";
 import MappingTable from "../mapping_comp/mappingTable";
 import { returnKeyDataFromArr } from "../../../../components/functions/functions";
+import { updateMapping } from "../../../../utils/api/api/mapAPI";
+import { useNavigate } from "react-router-dom";
 
 const MappingEdit = ({ apiEditInfo }) => {
   const [apiData, setApiData] = useState();
   const [minimumKey, setMinimumKey] = useState([]);
   const [maximumKey, setMaximumKey] = useState([]);
   const [checkbox, setCheckBox] = useState([]);
+  const [checkboxIndex, setCheckBoxIndex] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // console.log(apiEditInfo);
@@ -24,13 +29,44 @@ const MappingEdit = ({ apiEditInfo }) => {
     setMinimumKey(arrLength[1]);
     setMaximumKey(arrLength[0]);
     //checkbox
-    setCheckBox([...apiEditInfo.primary_key]);
+    setCheckBox([...apiEditInfo?.primary_key]);
+
+    let checkedArr = [];
+    apiEditInfo?.source_columns.forEach((item, index) => {
+      if (apiEditInfo?.primary_key.includes(item)) {
+        checkedArr.push(index);
+      }
+    });
+    setCheckBoxIndex(checkedArr);
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("submit");
-    console.log(apiData);
+    // console.log(apiData);
+    let submitData = { ...apiData };
+    let soruceKey = [...apiData.source_columns];
+    let checkArr = [...checkboxIndex];
+    let primaryKeyArr = [];
+    checkArr.forEach((ind) => {
+      primaryKeyArr.push(soruceKey[ind]);
+    });
+    submitData["primary_key"] = primaryKeyArr;
+    //send this to update API
+
+    let id = submitData.id;
+    delete submitData.id;
+    console.log(submitData, id);
+
+    try {
+      let resp = await updateMapping({ id, header: submitData });
+      if (resp.status === 200) {
+        console.log("SUCCESS");
+        setTimeout(() => {
+          navigate("/logic");
+        }, 1000);
+      }
+    } catch (error) {}
   };
 
   const handleDragData = (key, updatedArr) => {
@@ -44,24 +80,30 @@ const MappingEdit = ({ apiEditInfo }) => {
   };
 
   const handleCheckBox = (e, index) => {
-    console.log(index, e.target.checked);
+    // console.log(index, e.target.checked);
     let firstColKeys = [...apiData.source_columns];
     let checkboxArray = [...checkbox];
+    let checkIndex = [...checkboxIndex];
+
     if (e.target.checked === true) {
       //add
       checkboxArray.push(firstColKeys[index]);
+      checkIndex.push(index);
     } else {
       //minus array
       checkboxArray = checkboxArray.filter(
         (item) => item != firstColKeys[index]
       );
+      checkIndex = checkIndex.filter((ind) => ind != index);
     }
     setApiData((prevData) => {
       return { ...prevData, primary_key: checkboxArray };
     });
     setCheckBox(checkboxArray);
+    console.log(checkIndex);
+    setCheckBoxIndex(checkIndex);
 
-    console.log(checkboxArray);
+    // console.log(checkboxArray);
   };
 
   return (

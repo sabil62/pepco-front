@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import DragAndDrop from "../../../../assets/icons/dragAndDrop";
 
 const MappingTable = ({ arr, onDragData, keyName }) => {
-  console.log(keyName);
+  //   console.log(keyName);
   const currentlyDraggedComponent = useRef(0);
   const toBeReplacedComponent = useRef(0);
 

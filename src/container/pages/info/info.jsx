@@ -33,24 +33,28 @@ const Info = () => {
     // setApiData(tempD);
 
     const mapName = async () => {
-      // get all project
-      let resp = await getAllProject();
-      if (resp?.status === 200) {
-        setApiData(resp.data);
-      }
+      try {
+        // get all project
+        let resp = await getAllProject();
+        if (resp?.status === 200) {
+          setApiData(resp.data);
+        }
 
-      //get all file id with name
-      let resp2 = await getAllFile();
-      let mappedFileNameObj = {};
-      if (resp2?.status === 200) {
-        let fileData = resp2.data;
-        fileData.forEach((item) => {
-          mappedFileNameObj[item.id] = item.title;
-        });
-      }
+        //get all file id with name
+        let resp2 = await getAllFile();
+        let mappedFileNameObj = {};
+        if (resp2?.status === 200) {
+          let fileData = resp2.data;
+          fileData.forEach((item) => {
+            mappedFileNameObj[item.id] = item.title;
+          });
+        }
 
-      if (Object.keys(mappedFileNameObj).length > 0) {
-        setFileName(mappedFileNameObj); //{0:"one one",21:"two"}
+        if (Object.keys(mappedFileNameObj).length > 0) {
+          setFileName(mappedFileNameObj); //{0:"one one",21:"two"}
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
     mapName();
