@@ -6,11 +6,15 @@ import {
 import Container from "../../../../layout/container/container";
 import { returnKeyDataFromArr } from "../../../../components/functions/functions";
 import MappingTable from "../mapping_comp/mappingTable";
+import { getProject } from "../../../../utils/api/api/projectAPI";
 
-const MappingAdd = () => {
+const MappingAdd = ({ projectId }) => {
   const [apiData, setApiData] = useState();
   const [minimumKey, setMinimumKey] = useState([]);
   const [maximumKey, setMaximumKey] = useState([]);
+
+  const [projectData, setProjectData] = useState();
+  const [excelInfo, setExcelInfo] = useState();
 
   const tempVar = {
     id: 5,
@@ -23,6 +27,22 @@ const MappingAdd = () => {
   };
 
   useEffect(() => {
+    console.log(projectId);
+    if (projectId) {
+      const fetchAllData = async () => {
+        try {
+          let resp = await getProject({ id: projectId });
+          if (resp.status === 200) {
+            console.log(resp.data);
+            setProjectData(resp.data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchAllData();
+    }
+
     //all inside fetchdata
     setApiData(tempVar);
     const arrLength = returnKeyDataFromArr({
@@ -34,9 +54,9 @@ const MappingAdd = () => {
     setMaximumKey(arrLength[0]);
   }, []);
 
-  useEffect(() => {
-    console.log(apiData);
-  }, [apiData]);
+  //   useEffect(() => {
+  //     console.log(apiData);
+  //   }, [apiData]);
 
   const handleDragData = (key, updatedArr) => {
     // console.log(key);
