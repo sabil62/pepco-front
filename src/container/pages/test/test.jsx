@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { getFiles, uploadFiles } from "../../../utils/api/api/fileAPI";
+import { uploadFiles } from "../../../utils/api/api/fileAPI";
 import Comparison from "../comparison/comparison";
 
 const Test = () => {
   const [formData, setFormData] = useState();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let resp = await getFiles({ clientName: null });
-        console.log(resp);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    console.log({
+      id: 32,
+      title: "Old shrink",
+      file: "http://127.0.0.1:8000/media/excel/panda/old_Shrink_Mismatch_Report.xlsx",
+      header: {},
+      category: 4,
+    });
 
-    fetchData();
+    console.log({
+      id: 32,
+      title: "Old shrink",
+      file: "http://127.0.0.1:8000/media/excel/panda/old_Shrink_Mismatch_Report.xlsx",
+      header: {},
+      category: 4,
+    });
   }, []);
 
   const handleFileChange = async (e) => {

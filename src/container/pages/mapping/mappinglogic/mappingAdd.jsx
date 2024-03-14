@@ -9,6 +9,8 @@ import MappingTable from "../mapping_comp/mappingTable";
 import { getProject } from "../../../../utils/api/api/projectAPI";
 import { getFile } from "../../../../utils/api/api/fileAPI";
 import { getAllClient } from "../../../../utils/api/api/clientAPI";
+import { postMapping } from "../../../../utils/api/api/mapAPI";
+import { useNavigate } from "react-router-dom";
 
 const MappingAdd = ({ projectId }) => {
   const [apiData, setApiData] = useState();
@@ -19,8 +21,10 @@ const MappingAdd = ({ projectId }) => {
 
   const [checkboxIndex, setCheckBoxIndex] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    console.log(projectId);
+    console.log(projectId, "MapingAdd");
     if (projectId) {
       let currentProjectInfo = {};
       let fileInfoFirst = {};
@@ -102,7 +106,7 @@ const MappingAdd = ({ projectId }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("submit");
     let submitData = { ...apiData };
@@ -117,6 +121,18 @@ const MappingAdd = ({ projectId }) => {
     console.log(submitData);
     //now post this
     setApiData(submitData);
+
+    try {
+      let resp = await postMapping({ header: submitData });
+      if (resp.status === 200 || resp.status === 201) {
+        console.log(resp);
+        setTimeout(() => {
+          navigate("/logic");
+        }, 1200);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCheckBox = (e, index) => {

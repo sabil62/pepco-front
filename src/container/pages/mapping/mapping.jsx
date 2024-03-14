@@ -11,6 +11,7 @@ const Mapping = () => {
   const location = useLocation();
 
   useEffect(() => {
+    console.log(location);
     let projectId = location?.state?.projectId;
     if (projectId) {
       const fetchMappingInfo = async () => {
@@ -56,9 +57,11 @@ const Mapping = () => {
     ) : (
       <MappingAdd projectId={location?.state?.projectId} />
     )
-  ) : null;
+  ) : (
+    <MappingAdd projectId={location?.state?.projectId} />
+  );
 
-  return <MappingAdd projectId={location?.state?.projectId} />;
+  // return <MappingAdd projectId={location?.state?.projectId} />;
 };
 
 export default Mapping;

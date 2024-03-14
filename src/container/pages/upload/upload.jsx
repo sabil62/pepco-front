@@ -9,6 +9,7 @@ import {
   extractHeader,
 } from "../../../components/functions/parseFunctions";
 import ModifiedNameTable from "./modifiedNameTable/modifiedNameTable";
+import { getAllClient } from "../../../utils/api/api/clientAPI";
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -22,17 +23,22 @@ const Upload = () => {
 
   const [fileLengthArr, setFileLengthArr] = useState([]);
 
-  const [clientInfo, setClientInfo] = useState({
-    clientName: "",
-    clientAlias: "",
-  });
+  const [clientNames, setClientNames] = useState();
+  const [clientId, setClientId] = useState();
 
-  const handleClientInfo = (e, key) => {
-    e.preventDefault();
-    setClientInfo((prevState) => {
-      return { ...prevState, [key]: e.target.value };
-    });
-  };
+  useEffect(() => {
+    try {
+      const fetchClientName = async () => {
+        let resp = await getAllClient();
+        if (resp.status === 200) {
+          setClientNames(resp.data);
+        }
+      };
+      fetchClientName();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   useEffect(() => {
     console.log(cardArr);
@@ -102,12 +108,8 @@ const Upload = () => {
     let filterFileFromCardArr = newArr.filter(
       (c) => c.file !== null && c.file !== undefined
     );
-    let sendArr = [];
     let updatedSendArr = [];
     //client array
-    let clientData = { ...clientInfo };
-    let client_name = clientData.clientName;
-    let client_alias = clientData.clientAlias;
 
     if (
       // client_name !== "" &&
@@ -122,34 +124,29 @@ const Upload = () => {
 
         let headerJson = content.headers;
 
-        sendArr.push({
-          client_name,
-          client_alias,
-          title,
-          file,
-        });
-
         updatedSendArr.push({
           title,
           file,
-          header: headerJson,
-          category: client_name,
+          header: JSON.stringify(headerJson),
+          category: clientId && clientId,
         });
       });
       // console.log(filterFileFromCardArr);
-      console.log(sendArr);
-      console.log("the updated send array is", updatedSendArr);
+
+      console.log("the updated send array is", updatedSendArr[0]);
 
       //ppbb ################# API ##############
-      // try {
-      //   let resp = await uploadFiles({ formData: sendArr });
-      //   if (resp.status === 200) {
-      //     navigate("/logic/compform");
-      //   }
-      //   console.log(resp);
-      // } catch (error) {
-      //   console.log(error);
-      // }
+      try {
+        let resp = await uploadFiles({ formData: updatedSendArr[0] });
+        if (resp.status === 200 || resp.status === 201) {
+          setTimeout(() => {
+            navigate("/logic");
+          }, 1200);
+        }
+        console.log(resp);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       alert("Please Fill all the form");
     }
@@ -171,6 +168,10 @@ const Upload = () => {
     });
   };
 
+  const handleClientSelect = (e) => {
+    setClientId(e?.target?.value);
+  };
+
   return (
     <div className="bg-[#FFFEF9] pt-4 min-h-screen">
       <form>
@@ -181,13 +182,19 @@ const Upload = () => {
               Client Name:
               <select
                 id="from"
-                className="w-[70%]  focus:outline-none  form-select appearance-none pr-8 pl-2 bg-no-repeat bg-gray-50 border ml-5 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 px-5 py-4 mt-[14px] mb-[6px] outline-neutral-700"
+                onChange={(e) => handleClientSelect(e)}
+                className="w-[70%] text-md focus:outline-none  form-select appearance-none pr-8 pl-2 bg-no-repeat bg-gray-50 border ml-5 border-2 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 px-5 py-4 mt-[14px] mb-[6px] outline-neutral-700"
               >
                 <option value="" disabled selected>
                   Select Client
                 </option>
-                <option value="String">ABS Observability</option>
-                <option value="long">System Observabiltiy</option>
+
+                {clientNames &&
+                  clientNames?.map((c, index) => (
+                    <option key={index} value={c.id}>
+                      {c.name}
+                    </option>
+                  ))}
               </select>
             </label>
             {/* <label className="mb-4 text-[1.12rem] font-medium lg:col-span-5 md:col-span-12">

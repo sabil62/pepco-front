@@ -31,13 +31,13 @@ export const updateMapping = async ({ id, header }) => {
 export const postMapping = async ({ header }) => {
   // console.log(id, header);
   try {
-    let resp = await axiosInstance.put("/api/mapping/", header);
-    if (resp.status === 200) {
-      console.log(resp);
+    let resp = await axiosInstance.post("/api/mapping/", header);
+    if (resp.status === 200 || resp.status === 201) {
+      // console.log(resp);
       return resp;
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw error;
   }
 };

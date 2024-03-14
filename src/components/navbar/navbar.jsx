@@ -54,13 +54,18 @@ const Navbar = () => {
                       isActive ? inActiveClass : activeClass
                     }
                   >
-                    Add Info
+                    Add Project
                   </NavLink>
                 </li>
                 <li>
-                  <a className="hover:text-gray-700" href="#">
-                    Contact Us
-                  </a>
+                  <NavLink
+                    to="/logic/client"
+                    className={({ isActive }) =>
+                      isActive ? inActiveClass : activeClass
+                    }
+                  >
+                    Add Client
+                  </NavLink>
                 </li>
               </ul>
 

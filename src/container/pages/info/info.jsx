@@ -82,22 +82,23 @@ const Info = () => {
     });
   };
 
-  // const handleAdd = () => {
-  //   navigate("/logic/compform");
-  // };
+  const handleAdd = () => {
+    navigate("/logic/compform");
+  };
+
   return (
     <Container classInfo="bg-[#FFFEF9] min-h-[700px]">
       <div className="text-[1.24rem] mt-4 mb-6 font-medium">
         Client Observability Information
       </div>
-      {/* <div className="flex">
-          <div
-            onClick={handleAdd}
-            className="ml-auto cursor-pointer mb-3 rounded-lg py-2 text-indigo-500 w-[100px] text-center font-medium text-xl transition ease-out hover:bg-indigo-500 hover:text-white border border-2 border-indigo-500 "
-          >
-            + Add
-          </div>
-        </div> */}
+      <div className="flex">
+        <div
+          onClick={handleAdd}
+          className="ml-auto cursor-pointer mb-3 rounded-lg py-2 text-indigo-500 w-[100px] text-center font-medium text-xl transition ease-out hover:bg-indigo-500 hover:text-white border border-2 border-indigo-500 "
+        >
+          + Add
+        </div>
+      </div>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg mx-auto w-[940px] ">
         <table classNameName="text-sm text-left rtl:text-right text-gray-500">
@@ -131,8 +132,8 @@ const Info = () => {
                     {c.title}
                   </td>
 
-                  <td className="px-12 py-4 w-[220px]">{c.excel_files[0]}</td>
-                  <td className="px-12 py-4 w-[220px]">{c.excel_files[1]}</td>
+                  <td className="px-12 py-4 w-[240px]">{c.excel_files[0]}</td>
+                  <td className="px-12 py-4 w-[240px]">{c.excel_files[1]}</td>
                   <td className="px-12 py-4">{action(i)}</td>
                 </tr>
               ))}

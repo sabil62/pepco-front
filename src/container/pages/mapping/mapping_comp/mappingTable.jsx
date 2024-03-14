@@ -39,7 +39,7 @@ const MappingTable = ({ arr, onDragData, keyName }) => {
             <DragAndDrop />
           </div>
 
-          <div className="col-span-5 flex items-center font-medium text-lg">
+          <div className="col-span-5 w-[270px] flex items-center font-medium text-lg">
             {item}
           </div>
         </div>
