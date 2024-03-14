@@ -28,6 +28,18 @@ export const returnKeyWithMaxComp = (json_data) => {
   //   [ { pepco_list: 2 }, { new_list: 4 } ]
 };
 
+export const returnKeyDataFromArr = ({ firstArr, secondArr }) => {
+  let firstArrLength = firstArr.length;
+  let secondArrLength = secondArr.length;
+
+  if (firstArrLength === secondArrLength) {
+    return [firstArr, firstArr];
+  } else if (firstArrLength > secondArrLength) {
+    return [firstArr, secondArr];
+  }
+  return [secondArr, firstArr];
+};
+
 const findMinValueIndexOfArray = (arr) => {
   let min_value = Math.min(...arr);
   let ind = arr.indexOf(min_value);

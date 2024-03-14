@@ -44,7 +44,7 @@ const Navbar = () => {
                       isActive ? inActiveClass : activeClass
                     }
                   >
-                    Client Info
+                    Upload Info
                   </NavLink>
                 </li>
                 <li>

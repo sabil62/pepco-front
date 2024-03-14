@@ -99,7 +99,7 @@ const Info = () => {
   const action = (index) => (
     <div>
       <div
-        className="font-medium text-blue-600  hover:underline"
+        className="font-medium text-blue-600  hover:underline cursor-pointer"
         onClick={() => handleEdit(index)}
       >
         Edit
@@ -108,8 +108,8 @@ const Info = () => {
   );
 
   const handleEdit = (index) => {
-    // navigate("/logic/compform", { state: { edit: true } });
     console.log(index);
+    navigate("/logic/compform", { state: { edit: true } });
   };
 
   // const handleAdd = () => {
