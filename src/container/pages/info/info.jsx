@@ -10,49 +10,36 @@ import Project from "../project/project";
 const Info = () => {
   const navigate = useNavigate();
 
-  const [fileName, setFileName] = useState({});
   const [apiData, setApiData] = useState([]);
   const [isModal, setIsModal] = useState(false);
 
-  const idToTitle = () => {
-    let tempData = [...apiData];
-    for (let i = 0; i < tempData.length; i++) {
-      let firstID = tempData[i].excel_files[0];
-      let secondID = tempData[i].excel_files[1];
-
-      tempData[i].excel_files[0] = fileName[firstID];
-      tempData[i].excel_files[1] = fileName[secondID];
-    }
-    // this needed to uncommented what logic?
-    // setApiData(tempData);
-  };
-
-  useEffect(() => {
-    if (Object.keys(fileName)?.length > 0) {
-      idToTitle();
-    }
-  }, [fileName]);
-
   const mapName = async () => {
     try {
-      // get all project
+      // Fetch all projects
       let resp = await getAllProject();
       if (resp?.status === 200) {
-        setApiData(resp.data);
-      }
+        let projectData = resp.data;
 
-      //get all file id with name
-      let resp2 = await getAllFile();
-      let mappedFileNameObj = {};
-      if (resp2?.status === 200) {
-        let fileData = resp2.data;
-        fileData.forEach((item) => {
-          mappedFileNameObj[item.id] = item.title;
-        });
-      }
+        // Fetch all file IDs with their corresponding names
+        let resp2 = await getAllFile();
+        let mappedFileNameObj = {};
+        if (resp2?.status === 200) {
+          let fileData = resp2.data;
+          fileData.forEach((item) => {
+            mappedFileNameObj[item.id] = item.title;
+          });
+        }
 
-      if (Object.keys(mappedFileNameObj).length > 0) {
-        setFileName(mappedFileNameObj); //{0:"one one",21:"two"}
+        let tempData = [...projectData];
+        for (let i = 0; i < tempData.length; i++) {
+          let firstID = tempData[i].excel_files[0];
+          let secondID = tempData[i].excel_files[1];
+
+          tempData[i].excel_files[0] = mappedFileNameObj[firstID];
+          tempData[i].excel_files[1] = mappedFileNameObj[secondID];
+        }
+
+        setApiData(tempData);
       }
     } catch (error) {
       console.log(error);
@@ -60,11 +47,7 @@ const Info = () => {
   };
 
   useEffect(() => {
-    // setApiData(tempD);
-
     mapName();
-
-    // make this async func
   }, []);
 
   const action = (index) => (
