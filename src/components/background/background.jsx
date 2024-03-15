@@ -1,7 +1,11 @@
 import "./background.css";
 
-const Background = ({ children }) => {
-  return <div className="background">{children}</div>;
+const Background = ({ children, onModalClick }) => {
+  return (
+    <div className="background" onClick={onModalClick}>
+      {children}
+    </div>
+  );
 };
 
 export default Background;

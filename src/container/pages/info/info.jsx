@@ -5,12 +5,14 @@ import Container from "../../../layout/container/container";
 import { getAllProject } from "../../../utils/api/api/projectAPI";
 import { getAllFile } from "../../../utils/api/api/fileAPI";
 import Modal from "../../../components/modal/modal";
+import Project from "../project/project";
 
 const Info = () => {
   const navigate = useNavigate();
 
   const [fileName, setFileName] = useState({});
   const [apiData, setApiData] = useState([]);
+  const [isModal, setIsModal] = useState(false);
 
   const idToTitle = () => {
     let tempData = [...apiData];
@@ -31,34 +33,35 @@ const Info = () => {
     }
   }, [fileName]);
 
+  const mapName = async () => {
+    try {
+      // get all project
+      let resp = await getAllProject();
+      if (resp?.status === 200) {
+        setApiData(resp.data);
+      }
+
+      //get all file id with name
+      let resp2 = await getAllFile();
+      let mappedFileNameObj = {};
+      if (resp2?.status === 200) {
+        let fileData = resp2.data;
+        fileData.forEach((item) => {
+          mappedFileNameObj[item.id] = item.title;
+        });
+      }
+
+      if (Object.keys(mappedFileNameObj).length > 0) {
+        setFileName(mappedFileNameObj); //{0:"one one",21:"two"}
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     // setApiData(tempD);
 
-    const mapName = async () => {
-      try {
-        // get all project
-        let resp = await getAllProject();
-        if (resp?.status === 200) {
-          setApiData(resp.data);
-        }
-
-        //get all file id with name
-        let resp2 = await getAllFile();
-        let mappedFileNameObj = {};
-        if (resp2?.status === 200) {
-          let fileData = resp2.data;
-          fileData.forEach((item) => {
-            mappedFileNameObj[item.id] = item.title;
-          });
-        }
-
-        if (Object.keys(mappedFileNameObj).length > 0) {
-          setFileName(mappedFileNameObj); //{0:"one one",21:"two"}
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
     mapName();
 
     // make this async func
@@ -84,12 +87,22 @@ const Info = () => {
   };
 
   const handleAdd = () => {
-    navigate("/logic/compform");
+    setIsModal(true);
+    // navigate("/logic/compform");
+  };
+
+  const handleModalFalse = () => {
+    setIsModal(false);
   };
 
   return (
     <Container classInfo="bg-[#FFFEF9] min-h-[700px]">
-      <Modal />
+      <Modal
+        title="Add Project"
+        component={<Project />}
+        isModal={isModal}
+        onModalClick={handleModalFalse}
+      />
       <div className="text-[1.24rem] mt-4 mb-6 font-medium">
         Client Observability Information
       </div>

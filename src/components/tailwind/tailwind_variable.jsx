@@ -31,10 +31,12 @@ export const CardStr = styled.div(() => [
   tw`rounded-xl bg-white shadow-xl translate-x-4 translate-y-4 w-full h-full px-6 py-7`,
 ]);
 
-export const Button = styled.button((longTwo) => [
+export const Button = styled.button(({ longTwo, blue }) => [
   tw`px-6 py-3 rounded-md bg-indigo-500 hover:bg-indigo-400 text-white font-medium cursor-pointer`,
   longTwo &&
     tw`w-[180px] text-center text-[1.1rem] px-6 py-3 rounded-md bg-indigo-500 hover:bg-indigo-400 transition ease-out text-white font-medium cursor-pointer`,
+  blue &&
+    tw`text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center`,
 ]);
 {
   /* <React.Fragment>
