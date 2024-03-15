@@ -49,22 +49,22 @@ const Navbar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/logic/compform"
-                    className={({ isActive }) =>
-                      isActive ? inActiveClass : activeClass
-                    }
-                  >
-                    Add Project
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
                     to="/logic/client"
                     className={({ isActive }) =>
                       isActive ? inActiveClass : activeClass
                     }
                   >
                     Add Client
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/logic/compform"
+                    className={({ isActive }) =>
+                      isActive ? inActiveClass : activeClass
+                    }
+                  >
+                    Add Project
                   </NavLink>
                 </li>
               </ul>

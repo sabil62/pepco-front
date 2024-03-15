@@ -13,6 +13,7 @@ import Test from "../../container/pages/test/test";
 import Info from "../../container/pages/info/info";
 // import ComparisonNew from "../../container/pages/comparison/comparison_new";
 import Mapping from "../../container/pages/mapping/mapping";
+import Client from "../../container/pages/client/client";
 
 const logicPaths = [
   {
@@ -37,6 +38,15 @@ const logicPaths = [
       <ProtectedAppRoute>
         {" "}
         <Mapping />
+      </ProtectedAppRoute>
+    ),
+  },
+  {
+    path: "client",
+    element: (
+      <ProtectedAppRoute>
+        {" "}
+        <Client />
       </ProtectedAppRoute>
     ),
   },
