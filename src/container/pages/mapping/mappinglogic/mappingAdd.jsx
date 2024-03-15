@@ -146,8 +146,9 @@ const MappingAdd = ({ projectId }) => {
     setCheckBoxIndex(checkIndexArr);
   };
 
-  return (
+  return projectId ? (
     <Container className="bg-[#F4F5FA] min-h-screen pt-3 mt-6">
+      <div className="text-[4px]">Mapping Add</div>
       <form onSubmit={handleSubmit}>
         <Grid>
           <div className="col-span-8 text-2xl font-medium mt-7 mb-3">
@@ -226,6 +227,10 @@ const MappingAdd = ({ projectId }) => {
         </Grid>
       </form>
     </Container>
+  ) : (
+    <div className="text-2xl font-medium mt-16 text-center">
+      Please Select Project (Home) inorder to add Mapping
+    </div>
   );
 };
 

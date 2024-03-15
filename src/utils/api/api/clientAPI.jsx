@@ -13,3 +13,17 @@ export const getAllClient = async () => {
     throw error;
   }
 };
+
+export const postClient = async ({ header }) => {
+  // console.log(id, header);
+  try {
+    let resp = await axiosInstance.post("/api/category/", header);
+    console.log(resp);
+    if (resp.status === 200 || resp.status === 201) {
+      console.log(resp);
+      return resp;
+    }
+  } catch (error) {
+    throw error;
+  }
+};

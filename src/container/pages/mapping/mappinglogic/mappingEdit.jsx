@@ -108,7 +108,8 @@ const MappingEdit = ({ apiEditInfo, title }) => {
 
   return (
     <>
-      Mapping Edit
+      <div className="text-[10px]">Mapping Edit</div>
+
       <Container className="bg-[#F4F5FA] min-h-screen pt-3 mt-6">
         <form onSubmit={handleSubmit}>
           <Grid>
