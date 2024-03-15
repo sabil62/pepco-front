@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Container from "../../../layout/container/container";
 import { getAllProject } from "../../../utils/api/api/projectAPI";
 import { getAllFile } from "../../../utils/api/api/fileAPI";
+import Modal from "../../../components/modal/modal";
 
 const Info = () => {
   const navigate = useNavigate();
@@ -88,6 +89,7 @@ const Info = () => {
 
   return (
     <Container classInfo="bg-[#FFFEF9] min-h-[700px]">
+      <Modal />
       <div className="text-[1.24rem] mt-4 mb-6 font-medium">
         Client Observability Information
       </div>
