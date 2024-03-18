@@ -56,7 +56,7 @@ const Info = () => {
         className="font-medium text-blue-600  hover:underline cursor-pointer"
         onClick={() => handleEdit(index)}
       >
-        Edit
+        Run
       </div>
     </div>
   );
@@ -106,10 +106,10 @@ const Info = () => {
                 Project Name
               </th>
               <th scope="col" className="px-12 py-3 w-[220px] text-left">
-                From Map
+                File 1
               </th>
               <th scope="col" className="px-12 py-3 w-[220px] text-left">
-                To Map
+                File 2
               </th>
               <th scope="col" className="px-12 py-3">
                 Action

@@ -29,8 +29,8 @@ export const returnKeyWithMaxComp = (json_data) => {
 };
 
 export const returnKeyDataFromArr = ({ firstArr, secondArr }) => {
-  let firstArrLength = firstArr.length;
-  let secondArrLength = secondArr.length;
+  let firstArrLength = firstArr?.length;
+  let secondArrLength = secondArr?.length;
 
   if (firstArrLength === secondArrLength) {
     return [firstArr, firstArr];

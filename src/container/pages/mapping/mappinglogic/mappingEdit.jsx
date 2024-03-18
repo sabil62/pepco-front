@@ -8,6 +8,7 @@ import MappingTable from "../mapping_comp/mappingTable";
 import { returnKeyDataFromArr } from "../../../../components/functions/functions";
 import { updateMapping } from "../../../../utils/api/api/mapAPI";
 import { useNavigate } from "react-router-dom";
+import { applyMax } from "../../../../components/functions/parseFunctions";
 
 const MappingEdit = ({ apiEditInfo, title }) => {
   const [apiData, setApiData] = useState();
@@ -19,21 +20,21 @@ const MappingEdit = ({ apiEditInfo, title }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(apiEditInfo);
+    // console.log(apiEditInfo);
     setApiData(apiEditInfo);
     const arrLength = returnKeyDataFromArr({
-      firstArr: apiEditInfo?.source_columns, //replace tempVar with apiData
-      secondArr: apiEditInfo?.dest_columns,
+      firstArr: apiEditInfo?.file1_columns, //replace tempVar with apiData
+      secondArr: apiEditInfo?.file2_columns,
     });
     // console.log(arrLength);
     setMinimumKey(arrLength[1]);
     setMaximumKey(arrLength[0]);
     //checkbox
-    setCheckBox([...apiEditInfo?.primary_key]);
+    setCheckBox([...apiEditInfo?.join_on]);
 
     let checkedArr = [];
-    apiEditInfo?.source_columns.forEach((item, index) => {
-      if (apiEditInfo?.primary_key.includes(item)) {
+    apiEditInfo?.file1_columns.forEach((item, index) => {
+      if (apiEditInfo?.join_on.includes(item)) {
         checkedArr.push(index);
       }
     });
@@ -43,15 +44,18 @@ const MappingEdit = ({ apiEditInfo, title }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("submit");
-    // console.log(apiData);
+    console.log(apiData);
     let submitData = { ...apiData };
-    let soruceKey = [...apiData.source_columns];
+    let soruceKey = [...apiData.file1_columns];
     let checkArr = [...checkboxIndex];
     let primaryKeyArr = [];
     checkArr.forEach((ind) => {
       primaryKeyArr.push(soruceKey[ind]);
     });
-    submitData["primary_key"] = primaryKeyArr;
+    submitData["file1_columns"] = applyMax(apiData.file1_columns, maximumKey);
+    submitData["file2_columns"] = applyMax(apiData.file2_columns, maximumKey);
+
+    submitData["join_on"] = primaryKeyArr;
     //send this to update API
 
     let id = submitData.id;
@@ -59,13 +63,13 @@ const MappingEdit = ({ apiEditInfo, title }) => {
     console.log(submitData, id);
 
     try {
-      let resp = await updateMapping({ id, header: submitData });
-      if (resp.status === 200) {
-        console.log("SUCCESS");
-        setTimeout(() => {
-          navigate("/logic");
-        }, 1000);
-      }
+      // let resp = await updateMapping({ id, header: submitData });
+      // if (resp.status === 200) {
+      //   console.log("SUCCESS");
+      //   setTimeout(() => {
+      //     navigate("/logic");
+      //   }, 1000);
+      // }
     } catch (error) {}
   };
 
@@ -81,7 +85,7 @@ const MappingEdit = ({ apiEditInfo, title }) => {
 
   const handleCheckBox = (e, index) => {
     // console.log(index, e.target.checked);
-    let firstColKeys = [...apiData.source_columns];
+    let firstColKeys = [...apiData.file1_columns];
     let checkboxArray = [...checkbox];
     let checkIndex = [...checkboxIndex];
 
@@ -97,7 +101,7 @@ const MappingEdit = ({ apiEditInfo, title }) => {
       checkIndex = checkIndex.filter((ind) => ind != index);
     }
     setApiData((prevData) => {
-      return { ...prevData, primary_key: checkboxArray };
+      return { ...prevData, join_on: checkboxArray };
     });
     setCheckBox(checkboxArray);
     console.log(checkIndex);
@@ -133,11 +137,9 @@ const MappingEdit = ({ apiEditInfo, title }) => {
                 >
                   <input
                     type="checkbox"
-                    name={"is_primary_key"}
+                    name={"is_join_on"}
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  scale-125"
-                    checked={
-                      apiData?.primary_key?.includes(item) ? true : false
-                    }
+                    checked={apiData?.join_on?.includes(item) ? true : false}
                     onChange={(e) => handleCheckBox(e, ind)}
                   />
                 </div>
@@ -145,26 +147,26 @@ const MappingEdit = ({ apiEditInfo, title }) => {
             </div>
             <div className="col-span-4">
               <div className="text-xl font-medium mt-6 text-center">
-                {apiData?.source}
+                {apiData?.file1}
               </div>
 
-              {apiData?.source_columns && (
+              {apiData?.file1_columns && (
                 <MappingTable
-                  arr={apiData.source_columns}
+                  arr={apiData.file1_columns}
                   onDragData={handleDragData}
-                  keyName="source_columns"
+                  keyName="file1_columns"
                 />
               )}
             </div>
             <div className="col-span-4">
               <div className="text-xl font-medium mt-6 text-center">
-                {apiData?.dest}
+                {apiData?.file2}
               </div>
-              {apiData?.dest_columns && (
+              {apiData?.file2_columns && (
                 <MappingTable
-                  arr={apiData.dest_columns}
+                  arr={apiData.file2_columns}
                   onDragData={handleDragData}
-                  keyName="dest_columns"
+                  keyName="file2_columns"
                 />
               )}
             </div>

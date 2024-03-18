@@ -21,7 +21,7 @@ export const getAllFile = async () => {
   // http://127.0.0.1:8000/api/project/
   try {
     let resp = await axiosInstance.get("/api/file");
-    // console.log(resp);
+    console.log(resp);
     if (resp.status === 200) {
       return resp;
     }

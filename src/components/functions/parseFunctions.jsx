@@ -38,3 +38,18 @@ export const changeArrToObj = (arr) => {
   });
   return obj;
 };
+
+export const applyMax = (arr, maximumkey) => {
+  let arrLen = arr.length;
+  let maximumLength = maximumkey.length;
+
+  let sendArr = [...arr];
+
+  if (arrLen < maximumLength) {
+    let totalRemaining = maximumLength - arrLen;
+    for (let i = 0; i < totalRemaining; i++) {
+      sendArr.push("");
+    }
+  }
+  return sendArr;
+};

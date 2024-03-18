@@ -5,7 +5,7 @@ export const getAllClient = async () => {
   try {
     let resp = await axiosInstance.get("/api/category/");
     if (resp.status === 200) {
-      console.log(resp);
+      // console.log(resp);
       return resp;
     }
   } catch (error) {
@@ -18,9 +18,9 @@ export const postClient = async ({ header }) => {
   // console.log(id, header);
   try {
     let resp = await axiosInstance.post("/api/category/", header);
-    console.log(resp);
+    // console.log(resp);
     if (resp.status === 200 || resp.status === 201) {
-      console.log(resp);
+      // console.log(resp);
       return resp;
     }
   } catch (error) {

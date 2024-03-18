@@ -2,14 +2,16 @@ import "./modal.css";
 import Background from "../background/background";
 
 const Modal = ({ title = "Modal Title", component, isModal, onModalClick }) => {
+  // const defaultCSS =
+  //   "bgg w-[520px] rounded-lg bg-white z-[1200] transform -translate-x-1/2 -translate-y-1/2 ";
   const defaultCSS =
-    "bgg w-[520px] rounded-lg bg-white z-[1200] transform -translate-x-1/2 -translate-y-1/2 ";
+    "bgg rounded-lg bg-white z-[1200] transform -translate-x-1/2 -translate-y-1/2 ";
 
   const backgroundClass = isModal ? `bg--active ${defaultCSS}` : defaultCSS;
   return isModal === true ? (
     <>
       <Background onModalClick={onModalClick}></Background>
-      <div className="fixed top-[40%] left-[50%] z-[1200]">
+      <div className="fixed top-[43%] left-[50%] z-[1200]">
         <div className={backgroundClass}>
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
             <h3 className="text-lg font-semibold text-gray-900 ">{title}</h3>

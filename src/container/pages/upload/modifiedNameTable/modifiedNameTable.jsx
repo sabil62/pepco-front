@@ -21,7 +21,7 @@ const ModifiedNameTable = ({
         </h3> */}
         {/* -------- filename ---------- */}
         <label className="mb-5 mt-5 p-1 text-[1.06rem] font-medium lg:col-span-6 md:col-span-12">
-          File Name:
+          Title :
           <input
             type="text"
             value={fileName}

@@ -24,3 +24,14 @@ export const getProject = async ({ id }) => {
     throw error;
   }
 };
+
+export const postProject = async ({ headers }) => {
+  try {
+    let resp = await axiosInstance.post("/api/project/", headers);
+    if (resp.status === 200 || resp.status === 201) {
+      return resp;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
