@@ -20,13 +20,13 @@ const MappingEdit = ({ apiEditInfo, title }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // console.log(apiEditInfo);
+    console.log(apiEditInfo);
     setApiData(apiEditInfo);
     const arrLength = returnKeyDataFromArr({
       firstArr: apiEditInfo?.file1_columns, //replace tempVar with apiData
       secondArr: apiEditInfo?.file2_columns,
     });
-    // console.log(arrLength);
+    console.log(arrLength);
     setMinimumKey(arrLength[1]);
     setMaximumKey(arrLength[0]);
     //checkbox
@@ -63,13 +63,13 @@ const MappingEdit = ({ apiEditInfo, title }) => {
     console.log(submitData, id);
 
     try {
-      // let resp = await updateMapping({ id, header: submitData });
-      // if (resp.status === 200) {
-      //   console.log("SUCCESS");
-      //   setTimeout(() => {
-      //     navigate("/logic");
-      //   }, 1000);
-      // }
+      let resp = await updateMapping({ id, header: submitData });
+      if (resp.status === 200) {
+        console.log("SUCCESS");
+        setTimeout(() => {
+          navigate("/logic");
+        }, 1000);
+      }
     } catch (error) {}
   };
 
@@ -84,7 +84,7 @@ const MappingEdit = ({ apiEditInfo, title }) => {
   };
 
   const handleCheckBox = (e, index) => {
-    // console.log(index, e.target.checked);
+    console.log(index, e.target.checked);
     let firstColKeys = [...apiData.file1_columns];
     let checkboxArray = [...checkbox];
     let checkIndex = [...checkboxIndex];
@@ -130,7 +130,7 @@ const MappingEdit = ({ apiEditInfo, title }) => {
           <Grid grid12>
             <div className="col-span-1">
               <div className="font-medium mt-6 ml-3">Join Key</div>
-              {minimumKey?.map((item, ind) => (
+              {apiData?.file1_columns?.map((item, ind) => (
                 <div
                   key={item + ind}
                   className="h-16 mt-9 w-16 border-2 border-slate-200 bg-gray-50 rounded-md flex justify-center items-center hover:bg-gray-50 cursor-pointer"
@@ -141,6 +141,7 @@ const MappingEdit = ({ apiEditInfo, title }) => {
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  scale-125"
                     checked={apiData?.join_on?.includes(item) ? true : false}
                     onChange={(e) => handleCheckBox(e, ind)}
+                    disabled={ind >= minimumKey.length ? true : false}
                   />
                 </div>
               ))}

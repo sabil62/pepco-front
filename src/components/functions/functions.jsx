@@ -29,15 +29,20 @@ export const returnKeyWithMaxComp = (json_data) => {
 };
 
 export const returnKeyDataFromArr = ({ firstArr, secondArr }) => {
-  let firstArrLength = firstArr?.length;
-  let secondArrLength = secondArr?.length;
+  let firstArrLen = firstArr?.filter((item) => item !== "");
+  let secondArrLen = secondArr?.filter((item) => item !== "");
+
+  let firstArrLength = firstArrLen?.length;
+  let secondArrLength = secondArrLen?.length;
+
+  console.log(firstArrLen, secondArrLen, firstArrLength, secondArrLength);
 
   if (firstArrLength === secondArrLength) {
-    return [firstArr, firstArr];
+    return [firstArrLen, firstArrLen];
   } else if (firstArrLength > secondArrLength) {
-    return [firstArr, secondArr];
+    return [firstArrLen, secondArrLen];
   }
-  return [secondArr, firstArr];
+  return [secondArrLen, firstArrLen];
 };
 
 const findMinValueIndexOfArray = (arr) => {

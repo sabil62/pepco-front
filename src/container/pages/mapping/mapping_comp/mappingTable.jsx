@@ -25,25 +25,28 @@ const MappingTable = ({ arr, onDragData, keyName }) => {
   return (
     <div className="container">
       {/* use the loop here  */}
-      {arr?.map((item, index) => (
-        <div
-          className="grid grid-cols-12 gap-2 drag-box bg-[#D5DDF8] shadow-md cursor-move mt-5 mx-2 px-6 py-5 h-20 rounded-[18px] border-l-[24px] border-[#B0BCE8] hover:bg-blue-100 hover:border-blue-300"
-          key={item + index}
-          draggable
-          onDragStart={() => (currentlyDraggedComponent.current = index)}
-          onDragEnter={() => (toBeReplacedComponent.current = index)}
-          onDragEnd={handleSort}
-          onDragOver={(e) => e.preventDefault()}
-        >
-          <div className="drag-icon">
-            <DragAndDrop />
-          </div>
+      {arr?.map(
+        (item, index) =>
+          item !== "" && (
+            <div
+              className="grid grid-cols-12 gap-2 drag-box bg-[#D5DDF8] shadow-md cursor-move mt-5 mx-2 px-6 py-5 h-20 rounded-[18px] border-l-[24px] border-[#B0BCE8] hover:bg-blue-100 hover:border-blue-300"
+              key={item + index}
+              draggable
+              onDragStart={() => (currentlyDraggedComponent.current = index)}
+              onDragEnter={() => (toBeReplacedComponent.current = index)}
+              onDragEnd={handleSort}
+              onDragOver={(e) => e.preventDefault()}
+            >
+              <div className="drag-icon">
+                <DragAndDrop />
+              </div>
 
-          <div className="col-span-5 w-[270px] flex items-center font-medium text-lg">
-            {item}
-          </div>
-        </div>
-      ))}
+              <div className="col-span-5 w-[270px] flex items-center font-medium text-lg">
+                {item}
+              </div>
+            </div>
+          )
+      )}
     </div>
   );
 };
