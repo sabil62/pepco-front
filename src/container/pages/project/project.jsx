@@ -30,6 +30,7 @@ const Project = ({ handleModalFalse, fetchNewData }) => {
       projectId={projectId}
       handleModalFalse={handleModalFalse}
       fetchNewData={fetchNewData}
+      isModal={true}
     />
   );
 };

@@ -12,8 +12,14 @@ import { getAllClient } from "../../../../utils/api/api/clientAPI";
 import { postMapping } from "../../../../utils/api/api/mapAPI";
 import { useNavigate } from "react-router-dom";
 import { applyMax } from "../../../../components/functions/parseFunctions";
+import Container from "../../../../layout/container/container";
 
-const MappingAdd = ({ projectId, handleModalFalse, fetchNewData }) => {
+const MappingAdd = ({
+  projectId,
+  handleModalFalse,
+  fetchNewData,
+  isModal = true,
+}) => {
   const [apiData, setApiData] = useState();
   const [minimumKey, setMinimumKey] = useState([]);
   const [maximumKey, setMaximumKey] = useState([]);
@@ -130,10 +136,13 @@ const MappingAdd = ({ projectId, handleModalFalse, fetchNewData }) => {
       if (resp.status === 200 || resp.status === 201) {
         console.log(resp);
         setTimeout(() => {
-          navigate("/logic");
           //modal off
-          fetchNewData();
-          handleModalFalse();
+          if (isModal === true) {
+            fetchNewData();
+            handleModalFalse();
+          } else {
+            navigate("/logic");
+          }
         }, 1200);
       }
     } catch (error) {
@@ -152,90 +161,100 @@ const MappingAdd = ({ projectId, handleModalFalse, fetchNewData }) => {
     setCheckBoxIndex(checkIndexArr);
   };
 
-  return projectId ? (
-    <div className="w-[1280px] overflow-y-scroll max-h-[660px]">
-      {/* <Container className="bg-[#F4F5FA] min-h-screen pt-3 mt-6"> */}
-      <div className="bg-[#F4F5FA] px-8  ">
-        {/* <div className="text-[4px]">Mapping Add</div> */}
-        <form onSubmit={handleSubmit}>
-          <Grid>
-            <div className="col-span-8 text-2xl font-medium mt-7 mb-3">
-              {titleName && titleName}
-            </div>
-            <div className="md:col-span-10 pt-3 lg:col-span-2 flex justify-center items-center">
-              <Button type="submit">Submit</Button>
-            </div>
-          </Grid>
+  let innerJsx = (
+    <div className=" px-8  ">
+      <div className="text-[4px]">Mapping Add</div>
+      <form onSubmit={handleSubmit}>
+        <Grid>
+          <div className="col-span-8 text-2xl font-medium mt-7 mb-3">
+            {titleName && titleName}
+          </div>
+          <div className="md:col-span-10 pt-3 lg:col-span-2 flex justify-center items-center">
+            <Button type="submit">Submit</Button>
+          </div>
+        </Grid>
 
-          {/* grid  */}
-          <Grid grid12>
-            <div className="col-span-1">
-              <div className="font-medium mt-6 ml-3">Join Key</div>
-              {minimumKey?.map((item, index) => (
-                <div
-                  key={item + index}
-                  className="h-16 mt-9 w-16 border-2 border-slate-200 bg-gray-50 rounded-md flex justify-center items-center hover:bg-gray-50 cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    name={"is_primary_key"}
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  scale-125"
-                    onChange={(e) => handleCheckBox(e, index)}
-                  />
+        {/* grid  */}
+        <Grid grid12>
+          <div className="col-span-1">
+            <div className="font-medium mt-6 ml-3">Join Key</div>
+            {minimumKey?.map((item, index) => (
+              <div
+                key={item + index}
+                className="h-16 mt-9 w-16 border-2 border-slate-200 bg-gray-50 rounded-md flex justify-center items-center hover:bg-gray-50 cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  name={"is_primary_key"}
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  scale-125"
+                  onChange={(e) => handleCheckBox(e, index)}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="col-span-4">
+            <div className="text-xl font-medium mt-6 text-center">
+              {apiData?.file1}
+            </div>
+
+            {apiData?.file1_columns && (
+              <MappingTable
+                arr={apiData.file1_columns}
+                onDragData={handleDragData}
+                keyName="file1_columns"
+              />
+            )}
+          </div>
+          <div className="col-span-4">
+            <div className="text-xl font-medium mt-6 text-center">
+              {apiData?.file2}
+            </div>
+            {apiData?.file2_columns && (
+              <MappingTable
+                arr={apiData.file2_columns}
+                onDragData={handleDragData}
+                keyName="file2_columns"
+              />
+            )}
+          </div>
+          <div className="col-span-3">
+            <div className="text-lg font-medium mt-6 text-center ">
+              DataType
+            </div>
+            {maximumKey?.length > 0 &&
+              maximumKey.map((item, i) => (
+                <div key={item + i}>
+                  <select
+                    id="datatype"
+                    className="mt-8 mb-[44px] bg-gray-50 border border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-5 py-4 outline-neutral-700"
+                    //   onChange={(e) => handleSelect(e, i)}
+                  >
+                    <option value="" disabled selected>
+                      Select an option
+                    </option>
+                    <option value="String">String</option>
+                    <option value="long">Long</option>
+                    <option value="float">Float</option>
+                  </select>
                 </div>
               ))}
-            </div>
-            <div className="col-span-4">
-              <div className="text-xl font-medium mt-6 text-center">
-                {apiData?.file1}
-              </div>
-
-              {apiData?.file1_columns && (
-                <MappingTable
-                  arr={apiData.file1_columns}
-                  onDragData={handleDragData}
-                  keyName="file1_columns"
-                />
-              )}
-            </div>
-            <div className="col-span-4">
-              <div className="text-xl font-medium mt-6 text-center">
-                {apiData?.file2}
-              </div>
-              {apiData?.file2_columns && (
-                <MappingTable
-                  arr={apiData.file2_columns}
-                  onDragData={handleDragData}
-                  keyName="file2_columns"
-                />
-              )}
-            </div>
-            <div className="col-span-3">
-              <div className="text-lg font-medium mt-6 text-center ">
-                DataType
-              </div>
-              {maximumKey?.length > 0 &&
-                maximumKey.map((item, i) => (
-                  <div key={item + i}>
-                    <select
-                      id="datatype"
-                      className="mt-8 mb-[44px] bg-gray-50 border border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-5 py-4 outline-neutral-700"
-                      //   onChange={(e) => handleSelect(e, i)}
-                    >
-                      <option value="" disabled selected>
-                        Select an option
-                      </option>
-                      <option value="String">String</option>
-                      <option value="long">Long</option>
-                      <option value="float">Float</option>
-                    </select>
-                  </div>
-                ))}
-            </div>
-          </Grid>
-        </form>
-      </div>
+          </div>
+        </Grid>
+      </form>
     </div>
+  );
+
+  return projectId ? (
+    isModal === true ? (
+      <div className="w-[1280px] overflow-y-scroll max-h-[660px]">
+        {/* <Container className="bg-[#F4F5FA] min-h-screen pt-3 mt-6"> */}
+        {innerJsx}
+      </div>
+    ) : (
+      <Container className="bg-[#F4F5FA] min-h-screen pt-3 mt-6">
+        {innerJsx}
+      </Container>
+    )
   ) : (
     <div className="text-2xl font-medium mt-16 text-center">
       Please Select Project (Home) inorder to add Mapping
