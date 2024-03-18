@@ -14,6 +14,7 @@ import Info from "../../container/pages/info/info";
 // import ComparisonNew from "../../container/pages/comparison/comparison_new";
 import Mapping from "../../container/pages/mapping/mapping";
 import Client from "../../container/pages/client/client";
+import Validate from "../../container/pages/validate/validate";
 
 const logicPaths = [
   {
@@ -47,6 +48,15 @@ const logicPaths = [
       <ProtectedAppRoute>
         {" "}
         <Client />
+      </ProtectedAppRoute>
+    ),
+  },
+  {
+    path: "validate",
+    element: (
+      <ProtectedAppRoute>
+        {" "}
+        <Validate />
       </ProtectedAppRoute>
     ),
   },

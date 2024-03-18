@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import AuthContext from "../../config/providers/authProvider/authProvider";
-import { Button } from "../tailwind/tailwind_variable";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -59,12 +58,12 @@ const Navbar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/logic/compform"
+                    to="/logic/validate"
                     className={({ isActive }) =>
                       isActive ? inActiveClass : activeClass
                     }
                   >
-                    Add Mapping
+                    Validate
                   </NavLink>
                 </li>
               </ul>
