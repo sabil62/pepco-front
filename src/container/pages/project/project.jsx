@@ -1,15 +1,37 @@
 import React, { useEffect, useState } from "react";
 
-import { Button, Grid } from "../../../components/tailwind/tailwind_variable";
-import { getAllFile } from "../../../utils/api/api/fileAPI";
-import { postProject } from "../../../utils/api/api/projectAPI";
 import AddProject from "./addproject/addProject";
 import MappingAdd from "../mapping/mappinglogic/mappingAdd";
 
-const Project = () => {
+const Project = ({ handleModalFalse, fetchNewData }) => {
   const [isAddProject, setIsAddProject] = useState(true);
+  const [projectId, setProjectId] = useState();
 
-  return isAddProject === true ? <AddProject /> : <MappingAdd />;
+  useEffect(() => {
+    console.log(projectId);
+  }, [projectId]);
+
+  useEffect(() => {
+    setIsAddProject(true);
+  }, []);
+
+  const addProjectFalse = () => {
+    setIsAddProject(false);
+  };
+
+  const addProjectId = (id) => {
+    setProjectId(id);
+  };
+
+  return isAddProject === true ? (
+    <AddProject handleNext={addProjectFalse} addProjectId={addProjectId} />
+  ) : (
+    <MappingAdd
+      projectId={projectId}
+      handleModalFalse={handleModalFalse}
+      fetchNewData={fetchNewData}
+    />
+  );
 };
 
 export default Project;

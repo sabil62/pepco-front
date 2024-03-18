@@ -7,7 +7,7 @@ import {
 import { getAllFile } from "../../../../utils/api/api/fileAPI";
 import { postProject } from "../../../../utils/api/api/projectAPI";
 
-const AddProject = () => {
+const AddProject = ({ handleNext, addProjectId }) => {
   const [fileInfo, setFileInfo] = useState();
   const [projectInfo, setProjectInfo] = useState({
     projectName: "",
@@ -18,13 +18,13 @@ const AddProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(projectInfo);
+    //--------------
     if (
       projectInfo?.projectName !== "" &&
       projectInfo?.file1 !== "" &&
       projectInfo?.file2 !== ""
     ) {
       if (projectInfo?.file1 !== projectInfo?.file2) {
-        console.log("SUCCESS");
         let headerInfo = {
           title: projectInfo?.projectName,
           excel_files: [
@@ -34,14 +34,23 @@ const AddProject = () => {
         };
         console.log(headerInfo);
         let resp = await postProject({ headers: headerInfo });
-        // console.log(resp);
-        if (resp.status === 200 && resp.status === 201) {
+        console.log(resp);
+        if (resp.status === 200 || resp.status === 201) {
           //change logic here ppbb
+          let id = resp?.data?.id;
+          console.log(resp.data);
+          addProjectId(id);
+          setTimeout(() => {
+            handleNext();
+          }, 1000);
+
           console.log("SUCCESS");
         }
       } else {
         console.log("File1 and File 2 should be different");
       }
+
+      //------------------
     } else {
       console.log("ERROR, please fill all fields");
     }

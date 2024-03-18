@@ -3,7 +3,7 @@ import {
   Button,
   Grid,
 } from "../../../../components/tailwind/tailwind_variable";
-import Container from "../../../../layout/container/container";
+// import Container from "../../../../layout/container/container";
 import { returnKeyDataFromArr } from "../../../../components/functions/functions";
 import MappingTable from "../mapping_comp/mappingTable";
 import { getProject } from "../../../../utils/api/api/projectAPI";
@@ -13,7 +13,7 @@ import { postMapping } from "../../../../utils/api/api/mapAPI";
 import { useNavigate } from "react-router-dom";
 import { applyMax } from "../../../../components/functions/parseFunctions";
 
-const MappingAdd = ({ projectId = 23 }) => {
+const MappingAdd = ({ projectId, handleModalFalse, fetchNewData }) => {
   const [apiData, setApiData] = useState();
   const [minimumKey, setMinimumKey] = useState([]);
   const [maximumKey, setMaximumKey] = useState([]);
@@ -131,6 +131,9 @@ const MappingAdd = ({ projectId = 23 }) => {
         console.log(resp);
         setTimeout(() => {
           navigate("/logic");
+          //modal off
+          fetchNewData();
+          handleModalFalse();
         }, 1200);
       }
     } catch (error) {
@@ -150,9 +153,10 @@ const MappingAdd = ({ projectId = 23 }) => {
   };
 
   return projectId ? (
-    <div className="w-[1080px] snap-y">
-      <Container className="bg-[#F4F5FA] min-h-screen pt-3 mt-6">
-        <div className="text-[4px]">Mapping Add</div>
+    <div className="w-[1280px] overflow-y-scroll max-h-[660px]">
+      {/* <Container className="bg-[#F4F5FA] min-h-screen pt-3 mt-6"> */}
+      <div className="bg-[#F4F5FA] px-8  ">
+        {/* <div className="text-[4px]">Mapping Add</div> */}
         <form onSubmit={handleSubmit}>
           <Grid>
             <div className="col-span-8 text-2xl font-medium mt-7 mb-3">
@@ -230,7 +234,7 @@ const MappingAdd = ({ projectId = 23 }) => {
             </div>
           </Grid>
         </form>
-      </Container>
+      </div>
     </div>
   ) : (
     <div className="text-2xl font-medium mt-16 text-center">

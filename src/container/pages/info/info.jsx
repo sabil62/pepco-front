@@ -82,7 +82,9 @@ const Info = () => {
     <Container classInfo="bg-[#FFFEF9] min-h-[700px]">
       <Modal
         title="Add Project"
-        component={<Project />}
+        component={
+          <Project handleModalFalse={handleModalFalse} fetchNewData={mapName} />
+        }
         isModal={isModal}
         onModalClick={handleModalFalse}
       />
