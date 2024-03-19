@@ -15,6 +15,7 @@ import Info from "../../container/pages/info/info";
 import Mapping from "../../container/pages/mapping/mapping";
 import Client from "../../container/pages/client/client";
 import Validate from "../../container/pages/validate/validate";
+import Terminal from "../../container/pages/terminal/terminal";
 
 const logicPaths = [
   {
@@ -57,6 +58,14 @@ const logicPaths = [
       <ProtectedAppRoute>
         {" "}
         <Validate />
+      </ProtectedAppRoute>
+    ),
+  },
+  {
+    path: "terminal",
+    element: (
+      <ProtectedAppRoute>
+        <Terminal />
       </ProtectedAppRoute>
     ),
   },

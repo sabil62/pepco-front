@@ -66,6 +66,16 @@ const Navbar = () => {
                     Validate
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink
+                    to="/logic/terminal"
+                    className={({ isActive }) =>
+                      isActive ? inActiveClass : activeClass
+                    }
+                  >
+                    Terminal
+                  </NavLink>
+                </li>
               </ul>
 
               <div className="hidden xl:flex items-center space-x-5 items-center">
