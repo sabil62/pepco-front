@@ -67,3 +67,10 @@ export const extractFilenameFromURL = (url) => {
   // Return the filename without extension
   return filenameParts[0];
 };
+
+// export const spaceToDash = (header)=>{
+//   let sendHeader = {};
+//   sendHeader.forEach((item)=>{
+//     sendHeader = {[item]:}
+//   })
+// }

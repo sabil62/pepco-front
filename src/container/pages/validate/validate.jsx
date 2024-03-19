@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getValidate } from "../../../utils/api/api/validateAPI";
 import Container from "../../../layout/container/container";
 import { Button } from "../../../components/tailwind/tailwind_variable";
+import * as XLSX from "xlsx";
 
 const Validate = () => {
   const navigate = useNavigate();
@@ -28,6 +29,19 @@ const Validate = () => {
     }
   };
 
+  const exportToExcel = (data, filename) => {
+    if (data) {
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+      XLSX.writeFile(workbook, `${filename}.xlsx`, {
+        bookType: "xlsx",
+        type: "binary",
+      });
+    }
+  };
+
   useEffect(() => {
     console.log(location.state); //{projectId: 34, title: 'New Project'}
     handleValidate(location?.state?.projectId);
@@ -41,7 +55,12 @@ const Validate = () => {
         <Container>
           <div className="flex justify-end mb-4">
             <Button blueBig>Save</Button>
-            <Button blueBig>Download</Button>
+            <Button
+              blueBig
+              onClick={() => exportToExcel(index_df, location?.state?.title)}
+            >
+              Download
+            </Button>
           </div>
           <div class="overflow-x-auto">
             <table className=" table-auto  min-w-full text-sm text-left shadow-sm border border-2">
