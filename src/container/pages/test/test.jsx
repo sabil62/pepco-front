@@ -1,7 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { uploadFiles } from "../../../utils/api/api/fileAPI";
-import Comparison from "../comparison/comparison";
+// import Comparison from "../comparison/comparison";
 import MappingAdd from "../mapping/mappinglogic/mappingAdd";
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const notify = () => {
+  toast("Default Notification !");
+
+  toast.success("Success Notification !", {
+    position: "top-center",
+  });
+
+  toast.error("Error Notification !", {
+    position: "top-left",
+  });
+
+  toast.warn("Warning Notification !", {
+    position: "bottom-left",
+  });
+
+  toast.info("Info Notification !", {
+    position: "bottom-center",
+  });
+
+  toast("Custom Style Notification with css class!", {
+    position: "bottom-right",
+    className: "foo-bar",
+  });
+};
 
 const Test = () => {
   const [formData, setFormData] = useState();
@@ -60,7 +88,15 @@ const Test = () => {
   return (
     <>
       {/* <Comparison /> */}
-      <MappingAdd />
+      <button
+        onClick={notify}
+        className="ml-[40%] my-14 px-12 py-4 bg-indigo-500 hover:bg-indigo-400 text-white rounded-lg"
+      >
+        Notify
+      </button>
+      ;
+      <ToastContainer />
+      {/* <MappingAdd /> */}
       <div className="text-5xl font-bold text-center mt-[120px]">TEST</div>
       <form encType="multipart/form-data">
         <input

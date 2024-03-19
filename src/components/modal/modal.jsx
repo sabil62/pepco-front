@@ -1,6 +1,9 @@
 import "./modal.css";
 import Background from "../background/background";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Modal = ({ title = "Modal Title", component, isModal, onModalClick }) => {
   // const defaultCSS =
   //   "bgg w-[520px] rounded-lg bg-white z-[1200] transform -translate-x-1/2 -translate-y-1/2 ";
@@ -10,6 +13,7 @@ const Modal = ({ title = "Modal Title", component, isModal, onModalClick }) => {
   const backgroundClass = isModal ? `bg--active ${defaultCSS}` : defaultCSS;
   return isModal === true ? (
     <>
+      <ToastContainer />
       <Background onModalClick={onModalClick}></Background>
       <div className="fixed top-[46%] left-[50%] z-[1200]">
         <div className={backgroundClass}>

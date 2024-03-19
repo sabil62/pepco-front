@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   Button,
@@ -40,18 +42,30 @@ const AddProject = ({ handleNext, addProjectId }) => {
           let id = resp?.data?.id;
           console.log(resp.data);
           addProjectId(id);
+          toast.success("Success! Proceding to add Mapping", {
+            position: "top-center",
+            autoClose: 1600,
+            draggable: false,
+            closeButton: false,
+          });
           setTimeout(() => {
             handleNext();
-          }, 1000);
+          }, 2600);
 
-          console.log("SUCCESS");
+          // console.log("SUCCESS");
         }
       } else {
-        console.log("File1 and File 2 should be different");
+        toast.error("Error, File1 and File2 should be different", {
+          position: "top-center",
+        });
+        // console.log("File1 and File 2 should be different");
       }
 
       //------------------
     } else {
+      toast.error("Error, please fill all fields", {
+        position: "top-center",
+      });
       console.log("ERROR, please fill all fields");
     }
   };
@@ -77,6 +91,7 @@ const AddProject = ({ handleNext, addProjectId }) => {
 
   return (
     <>
+      {/* <ToastContainer /> */}
       <form onSubmit={(e) => handleSubmit(e)} className="w-[510px]">
         <Grid grid12>
           <div className="col-span-12 mx-6 mt-6">

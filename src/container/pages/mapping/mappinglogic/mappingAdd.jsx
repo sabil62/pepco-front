@@ -17,6 +17,9 @@ import { useNavigate } from "react-router-dom";
 import { applyMax } from "../../../../components/functions/parseFunctions";
 import Container from "../../../../layout/container/container";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const MappingAdd = ({
   projectId,
   handleModalFalse,
@@ -148,6 +151,9 @@ const MappingAdd = ({
       let resp = await postMapping({ header: submitData });
       if (resp.status === 200 || resp.status === 201) {
         console.log(resp);
+        toast.success("Successfully added Mapping!", {
+          position: "top-center",
+        });
         setTimeout(() => {
           //modal off
           if (isModal === true) {
@@ -156,9 +162,12 @@ const MappingAdd = ({
           } else {
             navigate("/logic");
           }
-        }, 1200);
+        }, 1700);
       }
     } catch (error) {
+      toast.error("Error", {
+        position: "top-center",
+      });
       console.log(error);
     }
   };
@@ -176,6 +185,7 @@ const MappingAdd = ({
 
   let innerJsx = (
     <div className=" px-8  ">
+      <ToastContainer />
       <div className="text-[4px]">Mapping Add</div>
       <form onSubmit={handleSubmit}>
         <Grid>
