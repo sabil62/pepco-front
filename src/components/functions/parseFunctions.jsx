@@ -34,7 +34,9 @@ export const extractHeader = ({ excelFile }) => {
 export const changeArrToObj = (arr) => {
   let obj = {};
   arr.forEach((item) => {
-    obj = { ...obj, [item]: item };
+    let no_space_item = item?.replace(/ /g, "_");
+    // obj = { ...obj, [no_space_item]: no_space_item };
+    obj = { ...obj, [item]: no_space_item };
   });
   return obj;
 };

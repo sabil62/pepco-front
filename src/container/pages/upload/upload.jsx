@@ -155,7 +155,8 @@ const Upload = () => {
   const handleModifiedName = ({ event, index, key }) => {
     setCardArr((prevCardArr) => {
       let arr = [...prevCardArr];
-      arr[index]["headers"][key] = event.target.value;
+      let headerValue = event.target.value;
+      arr[index]["headers"][key] = headerValue.replace(/ /g, "_");
       return arr;
     });
   };
@@ -197,18 +198,7 @@ const Upload = () => {
                   ))}
               </select>
             </label>
-            {/* <label className="mb-4 text-[1.12rem] font-medium lg:col-span-5 md:col-span-12">
-              Client Alias:
-              <input
-                type="text"
-                name="clientAlias"
-                value={clientInfo.clientAlias}
-                onChange={(e) => handleClientInfo(e, "clientAlias")}
-                className="shadow-sm rounded-md w-9/12  ml-3 my-2 px-3 py-2 border border-gray-300 border-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Client Alias"
-                required
-              />
-            </label> */}
+
             <div className="lg:col-span-2 mt-3 md:col-span-12">
               <button
                 type="submit"

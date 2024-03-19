@@ -147,7 +147,7 @@ const MappingEdit = ({ apiEditInfo, title }) => {
               ))}
             </div>
             <div className="col-span-4">
-              <div className="text-xl font-medium mt-6 text-center">
+              <div className="text-[1.14rem] font-medium mt-6 text-center">
                 {apiData?.file1}
               </div>
 
@@ -160,7 +160,7 @@ const MappingEdit = ({ apiEditInfo, title }) => {
               )}
             </div>
             <div className="col-span-4">
-              <div className="text-xl font-medium mt-6 text-center">
+              <div className="text-[1.14rem] font-medium mt-6 text-center">
                 {apiData?.file2}
               </div>
               {apiData?.file2_columns && (

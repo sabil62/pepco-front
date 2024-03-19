@@ -26,6 +26,8 @@ const MappingAdd = ({
   const [apiData, setApiData] = useState();
   const [minimumKey, setMinimumKey] = useState([]);
   const [maximumKey, setMaximumKey] = useState([]);
+  const [file1Title, setFile1Title] = useState();
+  const [file2Title, setFile2Title] = useState();
 
   const [titleName, setTitleName] = useState();
 
@@ -71,16 +73,19 @@ const MappingAdd = ({
 
           let fileName_1 = extractFilenameFromURL(String(fileInfoFirst.file));
           let fileName_2 = extractFilenameFromURL(String(fileInfoSecond.file));
+          console.log(fileInfoFirst, fileInfoSecond);
+          setFile1Title(fileName_1.title);
+          setFile2Title(fileName_2.title);
 
           console.log(fileName_1, fileName_2, typeof fileName_1);
 
           submitTemplate = {
-            file1: fileInfoFirst.title,
+            file1: fileName_1,
             // file1_columns: Object.keys(fileInfoFirst.header).map((c)=>c), //for keys
             file1_columns: Object.keys(fileInfoFirst.header).map(
               (c) => fileInfoFirst.header[c]
             ),
-            file2: fileInfoSecond.title,
+            file2: fileName_2,
             file2_columns: Object.keys(fileInfoSecond.header).map(
               (c) => fileInfoSecond.header[c]
             ),
@@ -201,9 +206,15 @@ const MappingAdd = ({
             ))}
           </div>
           <div className="col-span-4">
-            <div className="text-xl font-medium mt-6 text-center">
-              {apiData?.file1}
-            </div>
+            {isModal === true ? (
+              <div className="text-[1.06rem] font-medium mt-6 text-center">
+                {file1Title ? file1Title : apiData?.file1}
+              </div>
+            ) : (
+              <div className="text-[1.14rem] font-medium mt-6 text-center">
+                {file1Title ? file1Title : apiData?.file1}
+              </div>
+            )}
 
             {apiData?.file1_columns && (
               <MappingTable
@@ -214,9 +225,15 @@ const MappingAdd = ({
             )}
           </div>
           <div className="col-span-4">
-            <div className="text-xl font-medium mt-6 text-center">
-              {apiData?.file2}
-            </div>
+            {isModal === true ? (
+              <div className="text-[1.06rem] font-medium mt-6 text-center">
+                {file2Title ? file2Title : apiData?.file2}
+              </div>
+            ) : (
+              <div className="text-[1.14rem] font-medium mt-6 text-center">
+                {file2Title ? file2Title : apiData?.file2}
+              </div>
+            )}
             {apiData?.file2_columns && (
               <MappingTable
                 arr={apiData.file2_columns}
