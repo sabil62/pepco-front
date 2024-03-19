@@ -4,7 +4,10 @@ import {
   Grid,
 } from "../../../../components/tailwind/tailwind_variable";
 // import Container from "../../../../layout/container/container";
-import { returnKeyDataFromArr } from "../../../../components/functions/functions";
+import {
+  extractFilenameFromURL,
+  returnKeyDataFromArr,
+} from "../../../../components/functions/functions";
 import MappingTable from "../mapping_comp/mappingTable";
 import { getProject } from "../../../../utils/api/api/projectAPI";
 import { getFile } from "../../../../utils/api/api/fileAPI";
@@ -65,6 +68,11 @@ const MappingAdd = ({
             fileInfoFirst = respFile1.data;
             fileInfoSecond = respFile2.data;
           }
+
+          let fileName_1 = extractFilenameFromURL(String(fileInfoFirst.file));
+          let fileName_2 = extractFilenameFromURL(String(fileInfoSecond.file));
+
+          console.log(fileName_1, fileName_2, typeof fileName_1);
 
           submitTemplate = {
             file1: fileInfoFirst.title,
@@ -246,7 +254,7 @@ const MappingAdd = ({
 
   return projectId ? (
     isModal === true ? (
-      <div className="w-[1280px] overflow-y-scroll max-h-[660px]">
+      <div className="w-[1280px] overflow-y-scroll max-h-[690px]">
         {/* <Container className="bg-[#F4F5FA] min-h-screen pt-3 mt-6"> */}
         {innerJsx}
       </div>

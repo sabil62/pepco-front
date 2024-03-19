@@ -56,3 +56,14 @@ const findMaxValueIndexOfArray = (arr) => {
   let ind = arr.indexOf(min_value);
   return ind;
 };
+
+export const extractFilenameFromURL = (url) => {
+  // Split the URL by '/'
+  const parts = url.split("/");
+  // Get the last part (filename)
+  const filenameWithExtension = parts[parts.length - 1];
+  // Split the filename by '.' to separate the extension
+  const filenameParts = filenameWithExtension.split(".");
+  // Return the filename without extension
+  return filenameParts[0];
+};

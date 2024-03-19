@@ -56,10 +56,40 @@ const Info = () => {
         className="font-medium text-blue-600  hover:underline cursor-pointer"
         onClick={() => handleEdit(index)}
       >
-        Run
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          fill="none"
+          viewBox="0 0 28 28"
+        >
+          <path
+            fill="#4338CA"
+            d="M5.833 22.167h1.663L18.9 10.762 17.238 9.1 5.833 20.504v1.663zM3.5 24.5v-4.958L18.9 4.17c.233-.214.491-.38.774-.496.282-.117.578-.175.889-.175.31 0 .612.058.904.175.291.117.544.292.758.525l1.604 1.633c.233.214.404.467.511.759a2.5 2.5 0 010 1.765 2.16 2.16 0 01-.51.772L8.457 24.5H3.5zM18.054 9.946l-.816-.846 1.662 1.662-.846-.816z"
+          ></path>
+        </svg>
       </div>
     </div>
   );
+
+  const createIndex = (index) => (
+    <div>
+      <div
+        className="font-medium text-blue-600 ml-5 w-[100px] hover:underline cursor-pointer"
+        onClick={() => handleCreateindex(index)}
+      >
+        Create Index
+      </div>
+    </div>
+  );
+
+  const handleCreateindex = (index) => {
+    // console.log(apiData);
+    // console.log({ projectId: apiData[index].id });
+    navigate("/logic/validate", {
+      state: { projectId: apiData[index].id, title: apiData[index].title },
+    });
+  };
 
   const handleEdit = (index) => {
     console.log(apiData[index]);
@@ -71,7 +101,6 @@ const Info = () => {
 
   const handleAdd = () => {
     setIsModal(true);
-    // navigate("/logic/compform");
   };
 
   const handleModalFalse = () => {
@@ -100,20 +129,20 @@ const Info = () => {
         </div>
       </div>
 
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg mx-auto w-[940px] ">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg mx-auto w-[1020px] ">
         <table classNameName="text-sm text-left rtl:text-right text-gray-500">
           <thead className="text-lg text-gray-700 uppercase bg-gray-50  ">
             <tr>
-              <th scope="col" className="px-12 py-3 text-left">
+              <th scope="col" className="pl-10 pr-4 py-3 text-left">
                 Project Name
               </th>
-              <th scope="col" className="px-12 py-3 w-[220px] text-left">
+              <th scope="col" className="px-7 py-3 w-[260px] text-left">
                 File 1
               </th>
-              <th scope="col" className="px-12 py-3 w-[220px] text-left">
+              <th scope="col" className="px-7 py-3 w-[260px] text-left">
                 File 2
               </th>
-              <th scope="col" className="px-12 py-3">
+              <th scope="col" className="py-3 w-[260px]">
                 Action
               </th>
             </tr>
@@ -127,14 +156,19 @@ const Info = () => {
                 >
                   <td
                     scope="row"
-                    className="px-12 py-4 whitespace-nowrap w-[300px]"
+                    className="pl-10 pr-4 whitespace-nowrap w-[300px]"
                   >
                     {c.title}
                   </td>
 
-                  <td className="px-12 py-4 w-[240px]">{c.excel_files[0]}</td>
-                  <td className="px-12 py-4 w-[240px]">{c.excel_files[1]}</td>
-                  <td className="px-12 py-4">{action(i)}</td>
+                  <td className="px-7 py-4 w-[260px]">{c.excel_files[0]}</td>
+                  <td className="px-7 py-4 w-[260px]">{c.excel_files[1]}</td>
+                  <td className="py-4">
+                    <div className="flex justify-center items-center">
+                      {" "}
+                      {action(i)} {createIndex(i)}
+                    </div>
+                  </td>
                 </tr>
               ))}
           </tbody>
