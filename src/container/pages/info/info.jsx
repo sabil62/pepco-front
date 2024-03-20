@@ -75,10 +75,21 @@ const Info = () => {
   const terminal = (index) => (
     <div>
       <div
-        className="font-medium text-blue-600  hover:underline cursor-pointer ml-6"
+        className="font-medium text-blue-600  hover:underline cursor-pointer ml-5"
         onClick={() => handleTerminal(index)}
       >
-        Ter
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="27"
+          height="27"
+          fill="none"
+          viewBox="0 0 40 40"
+        >
+          <path
+            fill="#4338CA"
+            d="M6.666 33.333a3.208 3.208 0 01-2.353-.978A3.216 3.216 0 013.333 30V10c0-.917.327-1.701.98-2.354a3.218 3.218 0 012.353-.98h26.667c.917 0 1.702.327 2.355.98.653.654.98 1.438.978 2.354v20c0 .916-.326 1.701-.978 2.355a3.202 3.202 0 01-2.355.978H6.666zm0-3.333h26.667V13.333H6.666V30zm5.834-1.667L10.166 26l4.292-4.334-4.333-4.333L12.5 15l6.666 6.666-6.666 6.667zm7.5 0V25h10v3.333H20z"
+          ></path>
+        </svg>
       </div>
     </div>
   );
@@ -86,10 +97,25 @@ const Info = () => {
   const createIndex = (index) => (
     <div>
       <div
-        className="font-medium text-blue-600 ml-5 w-[100px] hover:underline cursor-pointer"
+        className="font-medium text-blue-600 ml-5 hover:underline cursor-pointer"
         onClick={() => handleCreateindex(index)}
       >
-        Create Index
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="26"
+          fill="none"
+          viewBox="0 0 40 40"
+        >
+          <path
+            fill="#4338CA"
+            d="M35 23.333v8.334A3.333 3.333 0 0131.667 35H8.333A3.333 3.333 0 015 31.667V8.333A3.333 3.333 0 018.333 5h8.334v3.333H8.333v23.334h23.334v-8.334H35z"
+          ></path>
+          <path
+            fill="#4338CA"
+            d="M35 11.667h-6.667V5H25v6.667h-6.667V15H25v6.667h3.333V15H35v-3.333z"
+          ></path>
+        </svg>
       </div>
     </div>
   );
