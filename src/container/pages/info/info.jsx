@@ -83,11 +83,6 @@ const Info = () => {
     </div>
   );
 
-  const handleTerminal = (id) => {
-    console.log(id);
-    navigate("/logic/terminal", { state: { projectId: id } });
-  };
-
   const createIndex = (index) => (
     <div>
       <div
@@ -99,14 +94,6 @@ const Info = () => {
     </div>
   );
 
-  const handleCreateindex = (index) => {
-    // console.log(apiData);
-    // console.log({ projectId: apiData[index].id });
-    navigate("/logic/validate", {
-      state: { projectId: apiData[index].id, title: apiData[index].title },
-    });
-  };
-
   const handleEdit = (index) => {
     console.log(apiData[index]);
     // apiData[index]
@@ -115,8 +102,20 @@ const Info = () => {
     });
   };
 
+  const handleTerminal = (id) => {
+    console.log(id);
+    navigate("/logic/terminal", { state: { projectId: apiData[id].id } });
+  };
   const handleAdd = () => {
     setIsModal(true);
+  };
+
+  const handleCreateindex = (index) => {
+    // console.log(apiData);
+    // console.log({ projectId: apiData[index].id });
+    navigate("/logic/validate", {
+      state: { projectId: apiData[index].id, title: apiData[index].title },
+    });
   };
 
   const handleModalFalse = () => {

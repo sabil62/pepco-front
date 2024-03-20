@@ -1,10 +1,38 @@
+import { useLocation } from "react-router-dom";
 import Modal from "../../../components/modal/modal";
 import SureFunc from "../../../components/modal/sureFunc/surefunc";
 import Container from "../../../layout/container/container";
 import React, { useState, useEffect } from "react";
+import { getTerminalInfo } from "../../../utils/api/api/terminalAPI";
 
 const Terminal = () => {
   const [isModal, setIsModal] = useState(false);
+  const [terminalTitle, setTerminalTitle] = useState();
+  const [sqlQuery, setSqlQuery] = useState();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log(location.state);
+    let locId = location?.state?.projectId;
+    const fetchTerminalData = async ({ id }) => {
+      try {
+        let resp = await getTerminalInfo({ id });
+        // console.log(resp);
+        if (resp.status === 200 || resp.status === 201) {
+          setTerminalTitle(resp.data.title);
+          setSqlQuery(resp.data.sql_query);
+          console.log("Success");
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
+
+    if (locId) {
+      fetchTerminalData({ id: locId });
+    }
+  }, []);
 
   const handleModalFalse = () => {
     setIsModal(false);
@@ -15,6 +43,10 @@ const Terminal = () => {
   };
   const handleSaveQuery = () => {
     console.log("Fd");
+  };
+  const handleSqlQuery = (e) => {
+    let newSqlQuery = e.target.value;
+    setSqlQuery(newSqlQuery);
   };
 
   return (
@@ -41,7 +73,9 @@ const Terminal = () => {
               <div className="px-5 py-3 bg-white rounded-t-lg ">
                 <textarea
                   id="query"
-                  rows="4"
+                  rows="5"
+                  value={sqlQuery}
+                  onChange={handleSqlQuery}
                   className="w-full px-0 rouned-md text-sm font-medium text-gray-900 bg-white border-0  h-[160px] focus:ring-0 outline-none"
                   placeholder="Paste Your Query..."
                   required
