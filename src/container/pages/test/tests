@@ -1,0 +1,51 @@
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+function Example() {
+    const toastId = toast.info("Loading", {
+        autoClose: 3000,
+        position: "top-center"
+      });
+  try {
+    toast.update(toastId, {
+        render: "Successfully Updated",
+        type: "success", // Use "success" instead of toast.TYPE.SUCCESS
+        autoClose: 2000,
+        className: "rotateY animated",
+        position: "top-center",
+      });
+    
+  } catch (error) {
+    toast.update(toastId, {
+        render: "Error occurred",
+        type: "error", // Use "error" instead of toast.TYPE.ERROR
+        autoClose: 3000,
+        className: "rotateY animated",
+        position: "top-center",
+      });
+  }
+}
+
+
+<ToastContainer/>
+
+
+ // With a string
+ toast.update(toastId, {
+    render: "New content",
+    type: toast.TYPE.INFO,
+    autoClose: 5000
+  });
+
+// Or with a component
+toast.update(toastId, {
+    render: MyComponent
+    type: toast.TYPE.INFO,
+    autoClose: 5000
+});
+
+toast.update(toastId, {
+    render: () => <div>New content</div>
+    type: toast.TYPE.INFO,
+    autoClose: 5000
+});

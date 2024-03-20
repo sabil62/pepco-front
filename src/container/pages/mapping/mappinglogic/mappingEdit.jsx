@@ -10,12 +10,17 @@ import { updateMapping } from "../../../../utils/api/api/mapAPI";
 import { useNavigate } from "react-router-dom";
 import { applyMax } from "../../../../components/functions/parseFunctions";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const MappingEdit = ({ apiEditInfo, title }) => {
   const [apiData, setApiData] = useState();
   const [minimumKey, setMinimumKey] = useState([]);
   const [maximumKey, setMaximumKey] = useState([]);
   const [checkbox, setCheckBox] = useState([]);
   const [checkboxIndex, setCheckBoxIndex] = useState([]);
+
+  // const toastId = React.useRef(null);
 
   const navigate = useNavigate();
 
@@ -62,15 +67,40 @@ const MappingEdit = ({ apiEditInfo, title }) => {
     delete submitData.id;
     console.log(submitData, id);
 
+    const toastId = toast.info("Uploading", {
+      autoClose: 3000,
+      position: "top-center",
+    });
+
     try {
       let resp = await updateMapping({ id, header: submitData });
+      // let resp = "lion";
       if (resp.status === 200) {
         console.log("SUCCESS");
+
+        toast.update(toastId, {
+          render: "Successfully Updated",
+          type: "success", // Use "success" instead of toast.TYPE.SUCCESS
+          autoClose: 2000,
+          className: "rotateY animated",
+          // position: "top-center",
+        });
+
         setTimeout(() => {
           navigate("/logic");
-        }, 1000);
+        }, 1900);
+
+        console.log("SUCCESS");
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.update(toastId, {
+        render: "Error occurred",
+        type: "error", // Use "error" instead of toast.TYPE.ERROR
+        autoClose: 3000,
+        className: "rotateY animated",
+        position: "top-center",
+      });
+    }
   };
 
   const handleDragData = (key, updatedArr) => {
@@ -112,6 +142,7 @@ const MappingEdit = ({ apiEditInfo, title }) => {
 
   return (
     <>
+      <ToastContainer />
       <div className="text-[10px]">Mapping Edit</div>
 
       <Container className="bg-[#F4F5FA] min-h-screen pt-3 mt-6">
