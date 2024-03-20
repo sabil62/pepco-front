@@ -1,9 +1,33 @@
+import Modal from "../../../components/modal/modal";
+import SureFunc from "../../../components/modal/sureFunc/surefunc";
 import Container from "../../../layout/container/container";
+import React, { useState, useEffect } from "react";
 
 const Terminal = () => {
+  const [isModal, setIsModal] = useState(false);
+
+  const handleModalFalse = () => {
+    setIsModal(false);
+  };
+  const handleModalTrue = (e) => {
+    e.preventDefault();
+    setIsModal(true);
+  };
+  const handleSaveQuery = () => {
+    console.log("Fd");
+  };
+
   return (
     <>
       {/* <div className="text-2xl mt-6 text-center">Terminal</div> */}
+      <Modal
+        title="Are you Sure?"
+        component={
+          <SureFunc handleNo={handleModalFalse} handleYes={handleSaveQuery} />
+        }
+        isModal={isModal}
+        onModalClick={handleModalFalse}
+      />
       <Container>
         <form className="mt-12">
           <div className="border border-gray-200 rounded-lg">
@@ -25,10 +49,16 @@ const Terminal = () => {
               </div>
               <div className="flex items-center justify-end px-3 py-3 border-t ">
                 <button
+                  className="inline-flex items-center py-2.5 px-6 mr-3 text-[1rem] font-medium text-center text-blue-700 border border-2 border-blue-700  rounded-lg focus:ring-4 focus:ring-blue-200  hover:bg-blue-600 hover:text-white transfrom ease-out"
+                  onClick={(e) => handleModalTrue(e)}
+                >
+                  Save Query
+                </button>
+                <button
                   type="submit"
                   className="inline-flex items-center py-2.5 px-6 mr-3 text-[1rem] font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200  hover:bg-blue-800"
                 >
-                  Submit Query
+                  Run Query
                 </button>
               </div>
             </div>

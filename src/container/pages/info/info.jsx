@@ -72,6 +72,22 @@ const Info = () => {
     </div>
   );
 
+  const terminal = (index) => (
+    <div>
+      <div
+        className="font-medium text-blue-600  hover:underline cursor-pointer ml-6"
+        onClick={() => handleTerminal(index)}
+      >
+        Ter
+      </div>
+    </div>
+  );
+
+  const handleTerminal = (id) => {
+    console.log(id);
+    navigate("/logic/terminal", { state: { projectId: id } });
+  };
+
   const createIndex = (index) => (
     <div>
       <div
@@ -166,7 +182,7 @@ const Info = () => {
                   <td className="py-4">
                     <div className="flex justify-center items-center">
                       {" "}
-                      {action(i)} {createIndex(i)}
+                      {action(i)} {createIndex(i)} {terminal(i)}
                     </div>
                   </td>
                 </tr>
