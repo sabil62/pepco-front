@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import {
-  Button,
   Grid,
   GridOffset,
 } from "../../../components/tailwind/tailwind_variable";
 import { postClient } from "../../../utils/api/api/clientAPI";
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Client = () => {
   const [clientName, setClientName] = useState("");
@@ -18,6 +19,12 @@ const Client = () => {
 
   const handlSubmit = (e) => {
     e.preventDefault();
+    const toastId = toast.info("Loading", {
+      autoClose: 3000,
+      position: "top-center",
+      className: "margin-offset",
+    });
+
     const clientAPI = async () => {
       try {
         let header = {
@@ -26,14 +33,21 @@ const Client = () => {
         if (clientName) {
           let resp = await postClient({ header });
           if (resp.status === 200 || resp.status === 201) {
-            console.log(resp);
-            console.log("SUCCESS");
-            setTimeout(() => {
-              navigate("/logic");
-            }, 1200);
+            toast.update(toastId, {
+              render: "Successfully Added Client",
+              type: "success",
+              autoClose: 2000,
+              className: "rotateY animated",
+            });
           }
         }
       } catch (error) {
+        toast.update(toastId, {
+          render: "Error occurred",
+          type: "error",
+          autoClose: 3000,
+          className: "rotateY animated",
+        });
         console.log(error);
       }
     };
@@ -42,6 +56,7 @@ const Client = () => {
 
   return (
     <>
+      <ToastContainer className="margin-offset" />
       <Grid grid12>
         <GridOffset one />
         <div className="col-span-10 flex justify-center item-center mt-14">

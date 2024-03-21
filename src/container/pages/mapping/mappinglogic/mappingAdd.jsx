@@ -185,7 +185,7 @@ const MappingAdd = ({
 
   let innerJsx = (
     <div className=" px-8  ">
-      <ToastContainer />
+      <ToastContainer className="margin-offset" />
       <div className="text-[4px]">Mapping Add</div>
       <form onSubmit={handleSubmit}>
         <Grid>

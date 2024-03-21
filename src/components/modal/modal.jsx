@@ -13,7 +13,7 @@ const Modal = ({ title = "Modal Title", component, isModal, onModalClick }) => {
   const backgroundClass = isModal ? `bg--active ${defaultCSS}` : defaultCSS;
   return isModal === true ? (
     <>
-      <ToastContainer />
+      <ToastContainer className="margin-offset" />
       <Background onModalClick={onModalClick}></Background>
       <div className="fixed top-[46%] left-[50%] z-[1200]">
         <div className={backgroundClass}>

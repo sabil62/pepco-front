@@ -95,7 +95,7 @@ const Test = () => {
         Notify
       </button>
       ;
-      <ToastContainer />
+      <ToastContainer className="margin-offset" />
       {/* <MappingAdd /> */}
       <div className="text-5xl font-bold text-center mt-[120px]">TEST</div>
       <form encType="multipart/form-data">

@@ -30,3 +30,7 @@ body {
   background-size: 1rem;
   background-position: right 0.5rem center;
 }
+
+.margin-offset {
+  margin-top: 62px !important;
+}

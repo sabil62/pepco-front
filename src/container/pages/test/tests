@@ -9,7 +9,7 @@ function Example() {
   try {
     toast.update(toastId, {
         render: "Successfully Updated",
-        type: "success", // Use "success" instead of toast.TYPE.SUCCESS
+        type: "success", 
         autoClose: 2000,
         className: "rotateY animated",
       });
@@ -17,7 +17,7 @@ function Example() {
   } catch (error) {
     toast.update(toastId, {
         render: "Error occurred",
-        type: "error", // Use "error" instead of toast.TYPE.ERROR
+        type: "error", 
         autoClose: 3000,
         className: "rotateY animated",
       });

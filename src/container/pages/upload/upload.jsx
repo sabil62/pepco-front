@@ -11,6 +11,9 @@ import {
 import ModifiedNameTable from "./modifiedNameTable/modifiedNameTable";
 import { getAllClient } from "../../../utils/api/api/clientAPI";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Upload = () => {
   const navigate = useNavigate();
 
@@ -110,12 +113,12 @@ const Upload = () => {
     );
     let updatedSendArr = [];
     //client array
+    const toastId = toast.info("Loading", {
+      autoClose: 3000,
+      position: "top-center",
+    });
 
-    if (
-      // client_name !== "" &&
-      // client_alias !== "" &&
-      filterFileFromCardArr.length > 0
-    ) {
+    if (filterFileFromCardArr.length > 0) {
       //card array
 
       filterFileFromCardArr.forEach((content) => {
@@ -137,6 +140,13 @@ const Upload = () => {
 
       //ppbb ################# API ##############
       try {
+        toast.update(toastId, {
+          render: "Successfully Uploaded",
+          type: "success",
+          autoClose: 2000,
+          className: "rotateY animated",
+        });
+
         let resp = await uploadFiles({ formData: updatedSendArr[0] });
         if (resp.status === 200 || resp.status === 201) {
           setTimeout(() => {
@@ -145,6 +155,12 @@ const Upload = () => {
         }
         console.log(resp);
       } catch (error) {
+        toast.update(toastId, {
+          render: "Error occurred",
+          type: "error",
+          autoClose: 3000,
+          className: "rotateY animated",
+        });
         console.log(error);
       }
     } else {
@@ -175,6 +191,7 @@ const Upload = () => {
 
   return (
     <div className="bg-[#FFFEF9] pt-4 min-h-screen">
+      <ToastContainer />
       <form>
         <Container>
           <div className="text-[1.56rem] font-bold mb-6 mt-2">Upload File</div>
