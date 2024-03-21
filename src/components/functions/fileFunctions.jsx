@@ -6,7 +6,9 @@ export const exportToExcel = (data, filename) => {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
-    XLSX.writeFile(workbook, `${filename}.xlsx`, {
+    let fileNam = filename ? filename : "Downloaded File";
+
+    XLSX.writeFile(workbook, `${fileNam}.xlsx`, {
       bookType: "xlsx",
       type: "binary",
     });

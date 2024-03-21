@@ -8,6 +8,7 @@ import {
   runTerminalSQL,
 } from "../../../utils/api/api/terminalAPI";
 import SqlDisplay from "../sql_display/sqlDisplay";
+import { exportToExcel } from "../../../components/functions/fileFunctions";
 
 const Terminal = () => {
   const [isModal, setIsModal] = useState(false);
@@ -88,7 +89,7 @@ const Terminal = () => {
         onModalClick={handleModalFalse}
       />
       <Container>
-        <form className="mt-12" onSubmit={handleSubmit}>
+        <form className="mt-12 mb-6" onSubmit={handleSubmit}>
           <div className="border border-gray-200 rounded-lg">
             <div className="text-[1.32rem] px-5 py-3 bg-gray-50 border-b rounded-t-lg font-medium">
               Terminal{" "}
@@ -136,7 +137,18 @@ const Terminal = () => {
         {/* ---------- */}
         {sqlResult && (
           <>
-            <div className="text-[1.32rem] mb-3 mt-6 font-medium">Result:</div>
+            <div className="flex justify-between items-center">
+              <div className="text-[1.32rem] mb-3 mt-6 font-medium inline-block">
+                Result:
+              </div>
+              <button
+                className="inline-block h-12 py-2 px-6 mr-3 text-[1rem] font-medium text-center text-blue-700 border border-2 border-blue-700  rounded-lg focus:ring-4 focus:ring-blue-200  hover:bg-blue-600 hover:text-white transfrom ease-out"
+                onClick={() => exportToExcel(sqlResult, terminalTitle)}
+              >
+                Download
+              </button>
+            </div>
+
             <SqlDisplay queryData={sqlResult} />
           </>
         )}
