@@ -7,12 +7,14 @@ import {
   getTerminalInfo,
   runTerminalSQL,
 } from "../../../utils/api/api/terminalAPI";
+import SqlDisplay from "../sql_display/sqlDisplay";
 
 const Terminal = () => {
   const [isModal, setIsModal] = useState(false);
   const [terminalTitle, setTerminalTitle] = useState();
   const [sqlQuery, setSqlQuery] = useState();
   const [projectId, setProjectId] = useState();
+  const [sqlResult, setSqlResult] = useState();
 
   const location = useLocation();
 
@@ -63,7 +65,12 @@ const Terminal = () => {
       console.log(headerInfo);
 
       let resp = await runTerminalSQL({ header: headerInfo });
-      console.log(resp);
+      if (resp.status === 200 || resp.status === 201) {
+        console.log(resp.data);
+        let resultQuery = resp.data;
+        let parsedJSON = JSON.parse(resultQuery);
+        setSqlResult(parsedJSON);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -126,6 +133,13 @@ const Terminal = () => {
             </div>
           </div>
         </form>
+        {/* ---------- */}
+        {sqlResult && (
+          <>
+            <div className="text-[1.32rem] mb-3 mt-6 font-medium">Result:</div>
+            <SqlDisplay queryData={sqlResult} />
+          </>
+        )}
       </Container>
     </>
   );

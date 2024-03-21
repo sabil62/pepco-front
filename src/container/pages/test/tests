@@ -12,7 +12,6 @@ function Example() {
         type: "success", // Use "success" instead of toast.TYPE.SUCCESS
         autoClose: 2000,
         className: "rotateY animated",
-        position: "top-center",
       });
     
   } catch (error) {
@@ -21,7 +20,6 @@ function Example() {
         type: "error", // Use "error" instead of toast.TYPE.ERROR
         autoClose: 3000,
         className: "rotateY animated",
-        position: "top-center",
       });
   }
 }

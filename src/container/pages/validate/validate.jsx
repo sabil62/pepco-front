@@ -3,7 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getValidate } from "../../../utils/api/api/validateAPI";
 import Container from "../../../layout/container/container";
 import { Button } from "../../../components/tailwind/tailwind_variable";
-import * as XLSX from "xlsx";
+
+import SqlDisplay from "../sql_display/sqlDisplay";
+import { exportToExcel } from "../../../components/functions/fileFunctions";
 
 const Validate = () => {
   const navigate = useNavigate();
@@ -29,19 +31,6 @@ const Validate = () => {
     }
   };
 
-  const exportToExcel = (data, filename) => {
-    if (data) {
-      const worksheet = XLSX.utils.json_to_sheet(data);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-
-      XLSX.writeFile(workbook, `${filename}.xlsx`, {
-        bookType: "xlsx",
-        type: "binary",
-      });
-    }
-  };
-
   useEffect(() => {
     console.log(location.state); //{projectId: 34, title: 'New Project'}
     handleValidate(location?.state?.projectId);
@@ -62,38 +51,7 @@ const Validate = () => {
               Download
             </Button>
           </div>
-          <div class="overflow-x-auto">
-            <table className=" table-auto  min-w-full text-sm text-left shadow-sm border border-2">
-              <thead className="bg-gray-50 text-gray-600 font-medium border-b ">
-                <tr className="divide-x odd:bg-gray-50 even:bg-white">
-                  {index_df?.length > 0 &&
-                    Object.keys(index_df[0])?.map((item, key) => (
-                      <th key={key} className="py-4 px-6">
-                        {item}
-                      </th>
-                    ))}
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 divide-y">
-                {index_df &&
-                  index_df.map((item, idx) => (
-                    <tr
-                      key={idx}
-                      className="divide-x odd:bg-gray-50 even:bg-white"
-                    >
-                      {Object.keys(index_df[idx])?.map((key, ind) => (
-                        <td
-                          key={ind}
-                          className="px-6 font-medium pt-6 pb-4 whitespace-nowrap "
-                        >
-                          {item[key]}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
+          <SqlDisplay queryData={index_df} />
         </Container>
       ) : (
         ""
