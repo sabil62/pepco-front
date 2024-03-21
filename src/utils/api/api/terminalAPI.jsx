@@ -11,3 +11,15 @@ export const getTerminalInfo = async ({ id }) => {
     throw error;
   }
 };
+
+export const runTerminalSQL = async ({ header }) => {
+  try {
+    let resp = await axiosInstance.post("/api/terminal/", header);
+    // console.log(resp);
+    if (resp.status === 200 || resp.status === 201) {
+      return resp;
+    }
+  } catch (error) {
+    throw error;
+  }
+};

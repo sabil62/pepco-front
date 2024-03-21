@@ -3,12 +3,16 @@ import Modal from "../../../components/modal/modal";
 import SureFunc from "../../../components/modal/sureFunc/surefunc";
 import Container from "../../../layout/container/container";
 import React, { useState, useEffect } from "react";
-import { getTerminalInfo } from "../../../utils/api/api/terminalAPI";
+import {
+  getTerminalInfo,
+  runTerminalSQL,
+} from "../../../utils/api/api/terminalAPI";
 
 const Terminal = () => {
   const [isModal, setIsModal] = useState(false);
   const [terminalTitle, setTerminalTitle] = useState();
   const [sqlQuery, setSqlQuery] = useState();
+  const [projectId, setProjectId] = useState();
 
   const location = useLocation();
 
@@ -30,6 +34,7 @@ const Terminal = () => {
     };
 
     if (locId) {
+      setProjectId(locId);
       fetchTerminalData({ id: locId });
     }
   }, []);
@@ -48,6 +53,21 @@ const Terminal = () => {
     let newSqlQuery = e.target.value;
     setSqlQuery(newSqlQuery);
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      let headerInfo = {
+        sql_query: sqlQuery,
+        project_id: projectId,
+      };
+      console.log(headerInfo);
+
+      let resp = await runTerminalSQL({ header: headerInfo });
+      console.log(resp);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -61,7 +81,7 @@ const Terminal = () => {
         onModalClick={handleModalFalse}
       />
       <Container>
-        <form className="mt-12">
+        <form className="mt-12" onSubmit={handleSubmit}>
           <div className="border border-gray-200 rounded-lg">
             <div className="text-[1.32rem] px-5 py-3 bg-gray-50 border-b rounded-t-lg font-medium">
               Terminal{" "}
