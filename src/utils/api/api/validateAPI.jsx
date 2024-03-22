@@ -11,3 +11,14 @@ export const getValidate = async (id) => {
     throw error;
   }
 };
+
+export const postIndex = async ({ header }) => {
+  try {
+    let resp = await axiosInstance.post(`/api/index/`, header);
+    if (resp.status === 200 || resp.status === 201) {
+      return resp;
+    }
+  } catch (error) {
+    throw error;
+  }
+};

@@ -39,8 +39,8 @@ export const runTerminalSQL = async ({ header }) => {
 // http://127.0.0.1:8000/api/sql/45/
 export const saveTerminalSQL = async ({ id, header }) => {
   try {
-    let resp = await axiosInstance.put(`/api/sql/${id}`, header);
-    // console.log(resp);
+    let resp = await axiosInstance.put(`/api/sql/${id}/`, header);
+    console.log(resp);
     if (resp.status === 200 || resp.status === 201) {
       return resp;
     }

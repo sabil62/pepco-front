@@ -34,7 +34,7 @@ const SqlDisplay = ({ queryData }) => {
         {/* <div className="text-xl text-white p-2 text-center">Result</div> */}
         <table className=" table-auto  min-w-full text-sm text-left shadow-sm border border-2">
           <thead className="text-gray-600 bg-[#E6E6E6] text-center">
-            <tr className="divide-x  ">
+            <tr className="divide-x ">
               {queryData?.length > 0 && (
                 <th className="z-1000 bg-[#E6E6E6] sticky left-0 pt-2 pb-[2px] pr-[2px] pl-3 border-r-2 border-b-2 border-gray-300">
                   <svg
@@ -55,7 +55,7 @@ const SqlDisplay = ({ queryData }) => {
                 Object.keys(queryData[0])?.map((item, ind) => (
                   <th
                     key={ind}
-                    className="py-2 px-6 border-r-2 border-b-2 border-gray-300"
+                    className="py-2 px-4 border-r-2 border-b-2 border-gray-300"
                   >
                     {aplhabet[ind]}
                   </th>
@@ -71,7 +71,7 @@ const SqlDisplay = ({ queryData }) => {
               )}
               {queryData?.length > 0 &&
                 Object.keys(queryData[0])?.map((item, key) => (
-                  <th key={key} className="py-2 px-6 bg-white">
+                  <th key={key} className="py-2 px-4 bg-white">
                     {item}
                   </th>
                 ))}
@@ -87,7 +87,7 @@ const SqlDisplay = ({ queryData }) => {
                   {Object.keys(queryData[idx])?.map((key, ind) => (
                     <td
                       key={ind}
-                      className="px-6 font-medium py-2 whitespace-nowrap "
+                      className="px-4 font-medium py-2 whitespace-nowrap "
                     >
                       {item[key]}
                     </td>

@@ -6,10 +6,13 @@ import React, { useState, useEffect } from "react";
 import {
   getTerminalInfo,
   runTerminalSQL,
+  saveTerminalSQL,
 } from "../../../utils/api/api/terminalAPI";
 import SqlDisplay from "../sql_display/sqlDisplay";
 import { exportToExcel } from "../../../components/functions/fileFunctions";
 import { getAllMapping } from "../../../utils/api/api/mapAPI";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Terminal = () => {
   const [isModal, setIsModal] = useState(false);
@@ -52,6 +55,11 @@ const Terminal = () => {
   };
   const handleSaveQuery = async () => {
     console.log("Fd");
+    const toastId = toast.info("Loading", {
+      autoClose: 3000,
+      position: "top-center",
+      className: "margin-offset",
+    });
     try {
       let respMapping = await getAllMapping();
       let mappingId, mappingInfo;
@@ -63,8 +71,32 @@ const Terminal = () => {
       }
       console.log(mappingId, mappingInfo);
 
-      // let respSql = await
+      let header = {
+        mapping: mappingId,
+        sql_query: sqlQuery,
+      };
+
+      let respSql = await saveTerminalSQL({ id: mappingId, header: header });
+      if (respSql.status === 200 || respSql.status === 201) {
+        console.log(respSql);
+        console.log("SUCCESS");
+        toast.update(toastId, {
+          render: "Successfully Updated",
+          type: "success",
+          autoClose: 2000,
+          className: "rotateY animated",
+        });
+        setTimeout(() => {
+          setIsModal(false);
+        }, 1600);
+      }
     } catch (error) {
+      toast.update(toastId, {
+        render: "Error occurred",
+        type: "error",
+        autoClose: 3000,
+        className: "rotateY animated",
+      });
       console.log(error);
     }
   };
@@ -95,6 +127,7 @@ const Terminal = () => {
 
   return (
     <>
+      <ToastContainer className="margin-offset" />
       {/* <div className="text-2xl mt-6 text-center">Terminal</div> */}
       <Modal
         title="Warning"
