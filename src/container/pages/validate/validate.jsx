@@ -12,6 +12,7 @@ const Validate = () => {
   const location = useLocation();
   const [index_df, setIndex_df] = useState();
   const [index_info, setIndex_info] = useState();
+  const [error, setError] = useState();
 
   const handleValidate = async (id) => {
     try {
@@ -27,6 +28,7 @@ const Validate = () => {
         setIndex_info(parsedJSONindex_info);
       }
     } catch (error) {
+      setError("Not found proper mapping ");
       console.log(error);
     }
   };
@@ -38,7 +40,7 @@ const Validate = () => {
   return (
     <>
       <div className="text-2xl text-center m-6 font-medium">
-        Validate Project {location?.state?.projectId}
+        {error ? `${error}` : `Validate Project -  ${location?.state?.title}`}
       </div>
       {index_df ? (
         <Container>

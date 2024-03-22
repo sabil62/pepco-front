@@ -30,7 +30,7 @@ const SqlDisplay = ({ queryData }) => {
   ];
   return (
     <>
-      <div class="overflow-x-auto  scrollbar rounded-[14px] shadow-lg mb-16">
+      <div class="overflow-x-auto  scrollbar rounded-[12.6px] shadow-lg mb-16">
         {/* <div className="text-xl text-white p-2 text-center">Result</div> */}
         <table className=" table-auto  min-w-full text-sm text-left shadow-sm border border-2">
           <thead className="text-gray-600 bg-[#E6E6E6] text-center">

@@ -9,6 +9,7 @@ import {
 } from "../../../utils/api/api/terminalAPI";
 import SqlDisplay from "../sql_display/sqlDisplay";
 import { exportToExcel } from "../../../components/functions/fileFunctions";
+import { getAllMapping } from "../../../utils/api/api/mapAPI";
 
 const Terminal = () => {
   const [isModal, setIsModal] = useState(false);
@@ -49,8 +50,23 @@ const Terminal = () => {
     e.preventDefault();
     setIsModal(true);
   };
-  const handleSaveQuery = () => {
+  const handleSaveQuery = async () => {
     console.log("Fd");
+    try {
+      let respMapping = await getAllMapping();
+      let mappingId, mappingInfo;
+      if (respMapping.data) {
+        mappingInfo = respMapping.data.filter(
+          (item) => item.project === projectId
+        );
+        mappingId = mappingInfo[0].id;
+      }
+      console.log(mappingId, mappingInfo);
+
+      // let respSql = await
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleSqlQuery = (e) => {
     let newSqlQuery = e.target.value;
@@ -81,7 +97,7 @@ const Terminal = () => {
     <>
       {/* <div className="text-2xl mt-6 text-center">Terminal</div> */}
       <Modal
-        title="Are you Sure?"
+        title="Warning"
         component={
           <SureFunc handleNo={handleModalFalse} handleYes={handleSaveQuery} />
         }
