@@ -13,6 +13,7 @@ import { exportToExcel } from "../../../components/functions/fileFunctions";
 import { getAllMapping } from "../../../utils/api/api/mapAPI";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import sqlFormatter from "@sqltools/formatter";
 
 const Terminal = () => {
   const [isModal, setIsModal] = useState(false);
@@ -32,7 +33,9 @@ const Terminal = () => {
         // console.log(resp);
         if (resp.status === 200 || resp.status === 201) {
           setTerminalTitle(resp.data.title);
-          setSqlQuery(resp.data.sql_query);
+          console.log(sqlFormatter.format(resp.data.sql_query));
+          let formatedSQL = sqlFormatter.format(resp.data.sql_query);
+          setSqlQuery(formatedSQL ? formatedSQL : resp.data.sql_query);
           console.log("Success");
         }
       } catch (error) {
@@ -102,6 +105,7 @@ const Terminal = () => {
   };
   const handleSqlQuery = (e) => {
     let newSqlQuery = e.target.value;
+    // console.log(sqlFormatter.format(newSqlQuery));
     setSqlQuery(newSqlQuery);
   };
   const handleSubmit = async (e) => {
@@ -138,7 +142,7 @@ const Terminal = () => {
         onModalClick={handleModalFalse}
       />
       <Container>
-        <form className="mt-12 mb-6" onSubmit={handleSubmit}>
+        <form className="mt-8 mb-6" onSubmit={handleSubmit}>
           <div className="border border-gray-200 rounded-lg">
             <div className="text-[1.32rem] px-5 py-3 bg-gray-50 border-b rounded-t-lg font-medium">
               Terminal{" "}
@@ -161,7 +165,7 @@ const Terminal = () => {
                   rows="5"
                   value={sqlQuery}
                   onChange={handleSqlQuery}
-                  className="w-full px-0 rouned-md text-sm font-medium text-gray-900 bg-white border-0  h-[180px] focus:ring-0 outline-none"
+                  className="w-full px-0 rouned-md text-sm font-medium text-gray-900 bg-white border-0  h-[280px] focus:ring-0 outline-none"
                   placeholder="Paste Your Query..."
                   required
                 />
